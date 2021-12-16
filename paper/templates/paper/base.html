@@ -25,7 +25,15 @@
     <!-- Custom styles for this template-->
     <link href="{% static 'paper/css/sb-admin-2.css' %}" rel="stylesheet">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-
+    <style>
+        #display_Cimage , #display_Simage{
+          width: 300px;
+          height: 200px;
+          border: 1px solid black;
+          background-position: center;
+          background-size: cover;
+        }
+    </style>
 
 </head>
 
@@ -311,11 +319,11 @@
     <!-- Core plugin JavaScript-->
     <script src="{% static 'paper/vendor/jquery-easing/jquery.easing.min.js' %}"></script>
 
-<head>
-
  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
 
-</head>
 
     <!-- Custom scripts for all pages-->
     <script src="{% static 'paper/js/sb-admin-2.min.js' %}"></script>
@@ -326,6 +334,7 @@
     <!-- Page level custom scripts -->
     <script src="{% static 'paper/js/demo/chart-area-demo.js' %}"></script>
     <script src="{% static 'paper/js/demo/chart-pie-demo.js' %}"></script>
+    <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
 
 </body>
 

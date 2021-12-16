@@ -1,6 +1,7 @@
 {% extends 'paper/base.html' %}
 {% load static %}
 {% block body %}
+{% load crispy_forms_tags %}
      <div class="container-fluid">
 
                     <!-- Page Heading -->
@@ -11,93 +12,93 @@
                     </div>
 
                     <!-- Content Row -->
-                    <div class="row">
-
-                        <!-- Earnings (Monthly) Card Example -->
-                        <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-primary shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                                Earnings (Monthly)</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-calendar fa-2x text-gray-300"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Earnings (Monthly) Card Example -->
-                        <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-success shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                                Earnings (Annual)</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">$215,000</div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Earnings (Monthly) Card Example -->
-                        <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-info shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Tasks
-                                            </div>
-                                            <div class="row no-gutters align-items-center">
-                                                <div class="col-auto">
-                                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">50%</div>
-                                                </div>
-                                                <div class="col">
-                                                    <div class="progress progress-sm mr-2">
-                                                        <div class="progress-bar bg-info" role="progressbar"
-                                                            style="width: 50%" aria-valuenow="50" aria-valuemin="0"
-                                                            aria-valuemax="100"></div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Pending Requests Card Example -->
-                        <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-warning shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                                                Pending Requests</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">18</div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-comments fa-2x text-gray-300"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="row" class="form-group">
+                       <form method="post" enctype="multipart/form-data">
+                           {% csrf_token %}
+                           {{form|crispy}}
+{#                          <div class="row">#}
+{#                            <input class="title" id="title" type="text">#}
+{#                            <div class="col">#}
+{#                                 <!-- Earnings (Monthly) Card Example -->#}
+{#                                <div class="col-xl-12 col-md-12 mb-4">#}
+{#                                    <div class="card border-left-success shadow h-100 py-2">#}
+{#                                        <div class="card-body">#}
+{#                                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">#}
+{#                                                نموذج الأسئلة الصحيحه#}
+{#                                                 <a href="#" id="del_cimg" class="btn btn-danger btn-circle btn-sm">#}
+{#                                                    <i class="fas fa-trash"></i>#}
+{#                                                </a>#}
+{#                                             </div>#}
+{##}
+{#                                              <input class="correct_image"  type="file" id="id_correct_image">#}
+{#                                              <div id="display_Cimage"></div>#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                </div>#}
+{#                            </div>#}
+{#                            <div class="col">#}
+{##}
+{#                        <!-- Earnings (Monthly) Card Example -->#}
+{#                        <div class="col-xl-12 col-md-12 mb-4">#}
+{#                            <div class="card border-left-primary shadow h-100 py-2">#}
+{#                                <div class="card-body">#}
+{#                                    <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">#}
+{#                                        نموذج أجابة الطالب#}
+{#                                        <a href="#" id="del_simg" class="btn btn-danger btn-circle btn-sm">#}
+{#                                            <i class="fas fa-trash"></i>#}
+{#                                        </a>#}
+{#                                     </div>#}
+{#                                    <input class="answer_image" type="file" id="id_answer_image">#}
+{#                                     <div id="display_Simage"></div>#}
+{#                                </div>#}
+{#                            </div>#}
+{#                            </div>#}
+{#                          </div>#}
+{#                          </div>#}
+                           <input class="btn btn-primary check-answer" id="check-answer" type="submit" value="تصحيح">
+                       </form>
                     </div>
 
 
                 </div>
+     <script>
+        const cimage_input = document.querySelector("#cimage_input");
+        const simage_input = document.querySelector("#simage_input");
+
+        const del_cimg = document.querySelector("#del_cimg");
+        const del_simg = document.querySelector("#del_simg");
+
+        let uploaded_image;
+
+        cimage_input.addEventListener('change', function() {
+          const reader = new FileReader();
+          reader.addEventListener('load', () => {
+            uploaded_image = reader.result;
+            document.querySelector("#display_Cimage").style.backgroundImage = `url(${uploaded_image})`;
+          });
+          reader.readAsDataURL(this.files[0]);
+        });
+        simage_input.addEventListener('change', function() {
+          const reader = new FileReader();
+          reader.addEventListener('load', () => {
+            uploaded_image = reader.result;
+            document.querySelector("#display_Simage").style.backgroundImage = `url(${uploaded_image})`;
+          });
+          reader.readAsDataURL(this.files[0]);
+        });
+
+
+        del_cimg.addEventListener('change', function() {
+          var image_x = document.getElementById('cimage_input');
+          console.log(image_x)
+          image_x.parentNode.removeChild(image_x);
+        });
+        del_simg.addEventListener('change', function() {
+          var image_x = document.getElementById('simage_input');
+          image_x.parentNode.removeChild(image_x);
+        });
+
+    </script>
+{##}
 {% endblock body%}
 

@@ -1,3 +1,5 @@
 from django.contrib import admin
 
-# Register your models here.
+from paper.models import Correct
+
+admin.site.register(Correct)
