@@ -9,15 +9,16 @@ from paper.forms import paperForm
 @login_required(login_url='/login/')
 def home(request):
     if request.method == 'POST':
-        form = paperForm(request.POST)
-        print(form)
+        form = paperForm(request.POST, request.FILES)
         if form.is_valid():
-            # img = form.save(commit=False)
+            save = form.save(commit=False)
             title = form.cleaned_data['title']
             img = form.cleaned_data['correct_image']
             img2 = form.cleaned_data['answer_image']
+
             print(title)
             print(img)
+            print(img2)
             print(type(img))
 
     else:
