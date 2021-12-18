@@ -1,12 +1,12 @@
 import cv2
 import numpy as np
-import utlis
+import paper.utlis as utlis
 
 
-def chack_answer(CorrectAnswerPath, StudentAnswerPath):
+def chack_answer(CorrectAnswerArray, StudentAnswerArray):
     # the parameters
-    CorrectAnswer = CorrectAnswerPath
-    StudentAnswer = StudentAnswerPath
+    c_arr = CorrectAnswerArray
+    s_arr = StudentAnswerArray
     heightImg = 1000
     widthImg = 1000
     questions = 10
@@ -14,8 +14,9 @@ def chack_answer(CorrectAnswerPath, StudentAnswerPath):
 
     # PREPROCESSING
     # Correct Answer paper
-    Cimg = cv2.imread(CorrectAnswer)
-    Cimg = cv2.resize(Cimg, (widthImg, heightImg))  # RESIZE IMAGE
+    # Cimg = cv2.imread(CorrectAnswer)
+    # print(Cimg)
+    Cimg = cv2.resize(c_arr, (widthImg, heightImg))  # RESIZE IMAGE
     CimgContours = Cimg.copy()  # COPY IMAGE FOR DISPLAY PURPOSES
     CimgGray = cv2.cvtColor(Cimg, cv2.COLOR_BGR2GRAY)  # CONVERT IMAGE TO GRAY SCALE
     CimgBlur = cv2.GaussianBlur(CimgGray, (5, 5), 1)  # ADD GAUSSIAN BLUR
@@ -29,8 +30,8 @@ def chack_answer(CorrectAnswerPath, StudentAnswerPath):
     CrectCon = utlis.rectContour(C_contours)  # FILTER FOR RECTANGLE CONTOURS
     # ---------------------------------------------------------------------------------------------------------------------------
     # Student Answer paper
-    Simg = cv2.imread(StudentAnswer)
-    Simg = cv2.resize(Simg, (widthImg, heightImg))  # RESIZE IMAGE
+    # Simg = cv2.imread(StudentAnswer)
+    Simg = cv2.resize(s_arr, (widthImg, heightImg))  # RESIZE IMAGE
     SimgContours = Simg.copy()  # COPY IMAGE FOR DISPLAY PURPOSES
     SimgGray = cv2.cvtColor(Simg, cv2.COLOR_BGR2GRAY)  # CONVERT IMAGE TO GRAY SCALE
     SimgBlur = cv2.GaussianBlur(SimgGray, (5, 5), 1)  # ADD GAUSSIAN BLUR
@@ -139,10 +140,10 @@ def chack_answer(CorrectAnswerPath, StudentAnswerPath):
                     CorrectIndexVal = np.where(CorrectArr == np.amax(CorrectArr))
                     # print(myIndexVal[0])
                     CorrectIndex.append(CorrectIndexVal[0][0])
-                # print('----------------------------------------')
-                # print("Correct Answers", CorrectIndex)
-                # print("Student Answers", StudentIndex)
-                # print('----------------------------------------')
+                print('----------------------------------------')
+                print("Correct Answers", CorrectIndex)
+                print("Student Answers", StudentIndex)
+                print('----------------------------------------')
 
                 # COMPARE THE VALUES TO FIND THE CORRECT ANSWERS
                 grading = []
@@ -152,9 +153,9 @@ def chack_answer(CorrectAnswerPath, StudentAnswerPath):
                         grading.append(1)
                     else:
                         grading.append(0)
-                # print("GRADING", grading)
+                print("GRADING", grading)
                 score = (sum(grading) / questions) * 100  # FINAL GRADE
-                # print("SCORE", score)
+                print("SCORE", score)
 
                 #  # DISPLAYING ANSWERS
                 #  CResultImg = CimgWarpColored.copy()

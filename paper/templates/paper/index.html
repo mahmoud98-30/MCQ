@@ -9,13 +9,20 @@
                         <h1 class="h3 mb-0 text-gray-800">تصحيح الجواب </h1>
                         <a href="{% static 'paper/img/form.pdf' %}" download="نموذج الاسئلة" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
                                 class="fas fa-download fa-sm text-white-50"></i> تحميل نموذج الاسئله</a>
+                        <a href="{% static 'paper/img/C.jpg' %}" download="نموذج الإجابة الصحيحة" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm"><i
+                                class="fas fa-download fa-sm text-white-50"></i> تحميل ورقة الإجابة الصحيحة تجريبي</a>
+                        <a href="{% static 'paper/img/S.jpg' %}" download="نموذج إجابة الطالب" class="d-none d-sm-inline-block btn btn-sm btn-danger shadow-sm"><i
+                                class="fas fa-download fa-sm text-white-50"></i> تحميل ورقة إجابة الطالب تجريبي</a>
                     </div>
+
+
+
 
                     <!-- Content Row -->
                     <div class="row" class="form-group">
                        <form method="post" enctype='multipart/form-data'>
                            {% csrf_token %}
-                           {{form|crispy}}
+                           {{form.as_p}}
 {#                          <div class="row">#}
 {#                            <input class="title" id="title" type="text">#}
 {#                            <div class="col">#}

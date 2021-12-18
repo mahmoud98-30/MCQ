@@ -1,5 +1,8 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+import cv2
+
+from paper.correction import chack_answer
 
 
 class Correct(models.Model):
@@ -15,3 +18,10 @@ class Correct(models.Model):
 
     def __str__(self):
         return self.title
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+
+        c_img_arr = cv2.imread(self.correct_image.path)
+        s_img_arr = cv2.imread(self.answer_image.path)
+        chack_answer(c_img_arr, s_img_arr)
