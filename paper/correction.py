@@ -185,3 +185,5 @@ def chack_answer(CorrectAnswerArray, StudentAnswerArray):
         print('The Scan Of Student Answer Paper Is Bad')
     else:
         print('Each Paper is have bad scan')
+
+    return CorrectIndex, StudentIndex

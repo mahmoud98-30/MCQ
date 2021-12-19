@@ -25,3 +25,4 @@ class Correct(models.Model):
         c_img_arr = cv2.imread(self.correct_image.path)
         s_img_arr = cv2.imread(self.answer_image.path)
         chack_answer(c_img_arr, s_img_arr)
+

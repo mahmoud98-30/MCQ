@@ -30,12 +30,11 @@ class UserCreationForm(forms.ModelForm):
 
 class LoginForm(forms.ModelForm):
     username = forms.CharField(label='اسم المستخدم')
-    email = forms.CharField(label='البريد الإلكتروني')
     password = forms.CharField(label='كلمة المورور', widget=forms.PasswordInput())
 
     class Meta:
         model = User
-        fields = ('username', 'email', 'password')
+        fields = ('username', 'password')
 
 
 class UserUpdateForm(forms.ModelForm):

@@ -12,9 +12,10 @@ def register(request):
         if form.is_valid():
             new_user = form.save(commit=False)
             new_user.set_password(form.cleaned_data['password1'])
+            username = form.cleaned_data.get('username')
             new_user.save()
             messages.success(
-                request, f'تهانينا {new_user} لقد تمت عملية التسجيل بنجاح.')
+                request, f'تهانينا {username} لقد تمت عملية التسجيل بنجاح.')
             return redirect('/login/')
     else:
         form = UserCreationForm()
@@ -27,7 +28,6 @@ def register(request):
 def login_user(request):
     if request.method == 'POST':
         username = request.POST['username']
-        # email = request.POST['email']
         password = request.POST['password']
         user = authenticate(request, username=username, password=password)
         if user is not None:
