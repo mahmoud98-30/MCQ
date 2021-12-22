@@ -15,18 +15,17 @@
                                 class="fas fa-download fa-sm text-white-50"></i> تحميل ورقة إجابة الطالب تجريبي</a>
                     </div>
 
-
-
+                     {% if messages %}
+                     {% for message in messages %}
+                     <div class="alert alert-{{message.tags}}">
+                        {{message}}
+                     </div>
+                     {% endfor %}
+                     {% endif %}
 
                     <!-- Content Row -->
                     <div class="row" class="form-group">
-                           {% if messages %}
-                            {% for message in messages %}
-                            <div class="alert alert-{{message.tags}}">
-                                {{message}}
-                            </div>
-                            {% endfor %}
-                            {% endif %}
+
                        <form method="post" enctype='multipart/form-data'>
                            {% csrf_token %}
                            {{form.as_p}}
@@ -113,6 +112,6 @@
         });
 
     </script>
-{##}
+
 {% endblock body%}
 

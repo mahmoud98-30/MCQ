@@ -19,7 +19,7 @@ def home(request):
             form.save()
 
             messages.success(
-                request, 'تهانينا  لقد تمت عملية بنجاح.')
+                request, 'تهانينا  لقد تمت عملية التصحيح بنجاح.')
             return redirect('/')
 
             # cimageURL = settings.MEDIA_URL + form.instance.correct_image.name
@@ -33,14 +33,10 @@ def home(request):
             # img = Correct.objects.get(id=4)
             # c_img = str(img.correct_image)
             # s_img = str(img.answer_image)
-
-
-
-
     else:
         form = paperForm()
 
     return render(request, 'paper/index.html', {
-        'title': 'home',
+        'title': 'الرئيسي',
         'form': form,
     }, )
