@@ -24,94 +24,20 @@
                      {% endif %}
 
                     <!-- Content Row -->
-                    <div class="row" class="form-group">
+                    <div class="row" class="form-group"  style="justify-content: center;">
+                        <div class="border p-4 mb-5 ">
+                            <legend class="border-bottom pb-1 mb-3 ">حمل الأوراق</legend>
+                            <form method="POST" enctype='multipart/form-data'>
+                                {% csrf_token %}
+                                {{form|crispy}}
+                                 <input class="btn btn-primary check-answer" id="check-answer" type="submit" value="تصحيح">
+                            </form>
+                        </div>
 
-                       <form method="post" enctype='multipart/form-data'>
-                           {% csrf_token %}
-                           {{form.as_p}}
-{#                          <div class="row">#}
-{#                            <input class="title" id="title" type="text">#}
-{#                            <div class="col">#}
-{#                                 <!-- Earnings (Monthly) Card Example -->#}
-{#                                <div class="col-xl-12 col-md-12 mb-4">#}
-{#                                    <div class="card border-left-success shadow h-100 py-2">#}
-{#                                        <div class="card-body">#}
-{#                                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">#}
-{#                                                نموذج الأسئلة الصحيحه#}
-{#                                                 <a href="#" id="del_cimg" class="btn btn-danger btn-circle btn-sm">#}
-{#                                                    <i class="fas fa-trash"></i>#}
-{#                                                </a>#}
-{#                                             </div>#}
-{##}
-{#                                              <input class="correct_image"  type="file" id="id_correct_image">#}
-{#                                              <div id="display_Cimage"></div>#}
-{#                                        </div>#}
-{#                                    </div>#}
-{#                                </div>#}
-{#                            </div>#}
-{#                            <div class="col">#}
-{##}
-{#                        <!-- Earnings (Monthly) Card Example -->#}
-{#                        <div class="col-xl-12 col-md-12 mb-4">#}
-{#                            <div class="card border-left-primary shadow h-100 py-2">#}
-{#                                <div class="card-body">#}
-{#                                    <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">#}
-{#                                        نموذج أجابة الطالب#}
-{#                                        <a href="#" id="del_simg" class="btn btn-danger btn-circle btn-sm">#}
-{#                                            <i class="fas fa-trash"></i>#}
-{#                                        </a>#}
-{#                                     </div>#}
-{#                                    <input class="answer_image" type="file" id="id_answer_image">#}
-{#                                     <div id="display_Simage"></div>#}
-{#                                </div>#}
-{#                            </div>#}
-{#                            </div>#}
-{#                          </div>#}
-{#                          </div>#}
-                           <input class="btn btn-primary check-answer" id="check-answer" type="submit" value="تصحيح">
-                       </form>
                     </div>
 
 
-                </div>
-     <script>
-        const cimage_input = document.querySelector("#cimage_input");
-        const simage_input = document.querySelector("#simage_input");
-
-        const del_cimg = document.querySelector("#del_cimg");
-        const del_simg = document.querySelector("#del_simg");
-
-        let uploaded_image;
-
-        cimage_input.addEventListener('change', function() {
-          const reader = new FileReader();
-          reader.addEventListener('load', () => {
-            uploaded_image = reader.result;
-            document.querySelector("#display_Cimage").style.backgroundImage = `url(${uploaded_image})`;
-          });
-          reader.readAsDataURL(this.files[0]);
-        });
-        simage_input.addEventListener('change', function() {
-          const reader = new FileReader();
-          reader.addEventListener('load', () => {
-            uploaded_image = reader.result;
-            document.querySelector("#display_Simage").style.backgroundImage = `url(${uploaded_image})`;
-          });
-          reader.readAsDataURL(this.files[0]);
-        });
-
-
-        del_cimg.addEventListener('change', function() {
-          var image_x = document.getElementById('cimage_input');
-          console.log(image_x)
-          image_x.parentNode.removeChild(image_x);
-        });
-        del_simg.addEventListener('change', function() {
-          var image_x = document.getElementById('simage_input');
-          image_x.parentNode.removeChild(image_x);
-        });
-
-    </script>
+     </div>
 
 {% endblock body%}
 

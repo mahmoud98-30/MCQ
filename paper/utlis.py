@@ -1,5 +1,6 @@
 import cv2
 import numpy as np
+import xlsxwriter
 
 
 ## TO STACK ALL THE IMAGES IN ONE WINDOW
@@ -72,10 +73,9 @@ def rectContour(contours):
             # print(len(approx))
             if len(approx) == 4:
                 rectCon.append(i)
-    rectCon = sorted(rectCon, key=cv2.contourArea, reverse=True)
     # print(rectCon)
     # print('-----------------------------------------------------')
-    # print(len(rectCon))
+    print(len(rectCon))
     return rectCon
 
 
@@ -147,3 +147,49 @@ def showAnswers(img, myIndex, grading, ans, questions=5, choices=4):
     #     correctAns = ans[x]
     #     cv2.circle(img, ((correctAns * secW) + secW // 2, (x * secH) + secH // 2),
     #                20, myColor, cv2.FILLED)
+
+
+def ExportExcel(TotelGRADING, TotelScore, PercentScore, CorrectAns, StudentAns):
+    # creat exile file
+    workbook = xlsxwriter.Workbook("result.xlsx")
+    sheet = workbook.add_worksheet()
+
+    # data
+    print('##################################')
+    print("TOTEL CORRECTION", TotelGRADING)
+    print("TOTEL SCORE", TotelScore)
+    print("Finel SCORE", PercentScore)
+    print("Correct Answer", CorrectAns)
+    print("Student Answer", StudentAns)
+    print('##################################')
+
+    # Header
+    sheet.write("A1", "اسم الطالب")
+    sheet.write("A2", "رقم السؤال")
+    sheet.write("A3", "الناتج")
+    sheet.write("A4", "الإجابه الطالب")
+    sheet.write("A5", "الإجابه الصحيحه")
+    sheet.write("A7", "نسبة النتيجة")
+
+    que_num = []
+    for num in range(1, 101):
+        que_num.append(num)
+
+    GRADING = []
+    for gra in TotelGRADING:
+        if gra == 0:
+            GRADING.append("خطأ")
+        else:
+            GRADING.append("صحيح")
+    # print(GRADING)
+
+    # write data in file
+    for item in range(len(que_num)):
+        sheet.write(1, item + 1, que_num[item])
+        sheet.write(2, item + 1, GRADING[item])
+        sheet.write(3, item + 1, StudentAns[item])
+        sheet.write(4, item + 1, CorrectAns[item])
+
+    sheet.write("A8", PercentScore)
+
+    workbook.close()
