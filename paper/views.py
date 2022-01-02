@@ -1,9 +1,7 @@
-from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 import cv2
-from django.conf import settings
 
 from paper.correction import chack_answer
 from paper.forms import paperForm
@@ -18,25 +16,34 @@ def home(request):
             form = form.save(commit=False)
             form.save()
 
+            # get last data
+            q = Correct.objects.latest('creat_at')
+
+            # convert image to array
+            c_img_arr = cv2.imread(q.correct_image.path)
+            s_img_arr = cv2.imread(q.answer_image.path)
+
+            # function of correction
+            correction = chack_answer(c_img_arr, s_img_arr)
+
             messages.success(
                 request, 'تهانينا  لقد تمت عملية التصحيح بنجاح.')
-            return redirect('/')
-
-            # cimageURL = settings.MEDIA_URL + form.instance.correct_image.name
-            # simageURL = settings.MEDIA_URL + form.instance.answer_image.name
-            # print(cimageURL)
-            # x = settings.MEDIA_ROOT_URL + cimageURL
-            # print(x)
-
-            # opencv_dface(settings.MEDIA_ROOT_URL + imageURL)
-
-            # img = Correct.objects.get(id=4)
-            # c_img = str(img.correct_image)
-            # s_img = str(img.answer_image)
+            return correction
     else:
         form = paperForm()
 
     return render(request, 'paper/index.html', {
         'title': 'الرئيسي',
         'form': form,
+    }, )
+
+
+@login_required(login_url='/login/')
+def paper_list(request):
+    # get last data
+    q = Correct.objects.all()
+    return render(request, 'paper/paper.html', {
+        'title': 'الاوراق',
+        'q': q,
+
     }, )

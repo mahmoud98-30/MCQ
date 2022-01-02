@@ -1,3 +1,5 @@
+import io
+from django.http import HttpResponse
 import cv2
 import numpy as np
 import xlsxwriter
@@ -150,8 +152,11 @@ def showAnswers(img, myIndex, grading, ans, questions=5, choices=4):
 
 
 def ExportExcel(TotelGRADING, TotelScore, PercentScore, CorrectAns, StudentAns):
+    # Create an in-memory output file for the new workbook.
+    output = io.BytesIO()
+
     # creat exile file
-    workbook = xlsxwriter.Workbook("result.xlsx")
+    workbook = xlsxwriter.Workbook(output)
     sheet = workbook.add_worksheet()
 
     # data
@@ -192,4 +197,18 @@ def ExportExcel(TotelGRADING, TotelScore, PercentScore, CorrectAns, StudentAns):
 
     sheet.write("A8", PercentScore)
 
+    # Close the workbook before sending the data.
     workbook.close()
+
+    # Rewind the buffer.
+    output.seek(0)
+
+    # Set up the Http response.
+    filename = 'Result.xlsx'
+    response = HttpResponse(
+        output,
+        content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+    )
+    response['Content-Disposition'] = 'attachment; filename=%s' % filename
+
+    return response

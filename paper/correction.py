@@ -182,7 +182,7 @@ def chack_answer(CorrectAnswerArray, StudentAnswerArray):
         StudentAns = [item for sublist in StudentAnslist for item in sublist]
 
         # exoprt to excel file
-        utlis.ExportExcel(TotelGRADING, TotelScore, PercentScore, CorrectAns, StudentAns)
+        excel_file = utlis.ExportExcel(TotelGRADING, TotelScore, PercentScore, CorrectAns, StudentAns)
 
         #  # DISPLAYING ANSWERS
         #  CResultImg = CimgWarpColored.copy()
@@ -213,4 +213,4 @@ def chack_answer(CorrectAnswerArray, StudentAnswerArray):
     else:
         print('Each Paper is have bad scan')
 
-    return TotelGRADING, TotelScore, PercentScore, CorrectAns, StudentAns
+    return excel_file
