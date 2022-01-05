@@ -1,15 +1,14 @@
 from django import forms
 from django.contrib.auth.models import User
+from django.utils.translation import gettext_lazy as _
 
 
 class UserCreationForm(forms.ModelForm):
-    username = forms.CharField(label='اسم المستخدم', max_length=30,
+    username = forms.CharField(max_length=30,
                                help_text='اسم المستخدم يجب ألا يحتوي على مسافات.')
-    email = forms.EmailField(label='البريد الإلكتروني')
-    password1 = forms.CharField(
-        label='كلمة المرور', widget=forms.PasswordInput(), min_length=8)
-    password2 = forms.CharField(
-        label='تأكيد كلمة المرور', widget=forms.PasswordInput(), min_length=8)
+    email = forms.EmailField()
+    password1 = forms.CharField(widget=forms.PasswordInput(), min_length=8)
+    password2 = forms.CharField(widget=forms.PasswordInput(), min_length=8)
 
     class Meta:
         model = User
@@ -18,19 +17,28 @@ class UserCreationForm(forms.ModelForm):
     def clean_password2(self):
         cd = self.cleaned_data
         if cd['password1'] != cd['password2']:
-            raise forms.ValidationError('كلمة المرور غير متطابقة')
+            raise forms.ValidationError(_('Password does not match'))
         return cd['password2']
 
     def clean_username(self):
         cd = self.cleaned_data
         if User.objects.filter(username=cd['username']).exists():
-            raise forms.ValidationError('يوجد مستخدم مسجل بهذا الاسم.')
+            raise forms.ValidationError(_('There is a registered user with this name.'))
         return cd['username']
+
+    def clean_email(self):
+        """
+           Check the email if exists or not
+        """
+        cd = self.cleaned_data
+        if User.objects.filter(email=cd['email']).exists():
+            raise forms.ValidationError(_("The email is already email"))
+        return cd['email']
 
 
 class LoginForm(forms.ModelForm):
-    username = forms.CharField(label='اسم المستخدم')
-    password = forms.CharField(label='كلمة المورور', widget=forms.PasswordInput())
+    username = forms.CharField()
+    password = forms.CharField(widget=forms.PasswordInput())
 
     class Meta:
         model = User
@@ -38,9 +46,9 @@ class LoginForm(forms.ModelForm):
 
 
 class UserUpdateForm(forms.ModelForm):
-    first_name = forms.CharField(label='الاسم الأول')
-    last_name = forms.CharField(label='الاسم الأخير')
-    email = forms.EmailField(label='البريد الإلكتروني')
+    first_name = forms.CharField()
+    last_name = forms.CharField()
+    email = forms.EmailField()
 
     class Meta:
         model = User

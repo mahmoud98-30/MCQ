@@ -1,4 +1,5 @@
 {% load static %}
+{% load i18n %}
 <!DOCTYPE html>
 <html lang="ar">
 
@@ -11,9 +12,9 @@
     <meta name="author" content="">
 
     {% if title %}
-        <title>تصحيح | {{title}}</title>
+        <title>{% trans "correction" %} | {{title}}</title>
     {% else %}
-    <title>تصحيح</title>
+    <title>{% trans "correction" %}</title>
     {% endif %}
 
     <!-- Custom fonts for this template-->
@@ -52,7 +53,7 @@
                 <div class="sidebar-brand-icon rotate-n-15">
                     <img style="height: 56px;width: auto;" src="{% static 'paper/img/logo.png' %}">
                 </div>
-                <div class="sidebar-brand-text mx-3">تصحيح التلقائ</div>
+                <div class="sidebar-brand-text mx-3">{% trans "correction" %}</div>
             </a>
 
             <!-- Divider -->
@@ -62,7 +63,7 @@
             <li class="nav-item active">
                 <a class="nav-link" href="{{ home }}/">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>تصحيح</span></a>
+                    <span>{% trans "correction" %}</span></a>
             </li>
 
             <!-- Divider -->
@@ -70,20 +71,21 @@
 
             <!-- Heading -->
             <div class="sidebar-heading">
-الاوراق و الاعدادات            </div>
+                {% trans "Papers and settings" %}
+            </div>
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="{% url "paper:paper-list" %}">
                     <i class="fas fa-fw far fa-copy"></i>
-                    <span>أوراق الأسئله و الأجوبة</span></a>
+                    <span>{% trans "Question and answer sheets" %}</span></a>
             </li>
 
              <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
-                <a class="nav-link" href="#">
+                <a class="nav-link" data-toggle="modal" data-target="#DeleteAllModal">
                     <i class="fas fa-fw far fa-cog"></i>
-                    <span>مسح كل البيانات </span></a>
+                    <span>{% trans "Delete all data" %} </span></a>
             </li>
 
             <!-- Divider -->
@@ -91,14 +93,14 @@
 
             <!-- Heading -->
             <div class="sidebar-heading">
-                الخروج
+                {% trans "Exit" %}
             </div>
 
                 <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
                 <a class="nav-link" data-toggle="modal" data-target="#logoutModal">
                     <i class="fas fa-sign-out-alt"></i>
-                    <span>تسجيل الخروج </span></a>
+                    <span>{% trans "logout" %}</span></a>
             </li>
 
             <!-- Divider -->
@@ -130,10 +132,24 @@
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
 
-
+                    <form action="{% url 'set_language' %}" method="post">{% csrf_token %}
+                     {% get_current_language as LANGUAGE_CODE %}
+                        <input name="next" type="hidden" value="{{ request.get_full_path|slice:'3:' }}">
+                         {% if LANGUAGE_CODE == 'ar' %}
+                           <button type='submit' name='language' value='en' class="icon solid fa-language">
+                              <span class="label"></span>English
+                           </button>
+                         {% else %}
+                           <button type='submit' name='language' value='ar' class="icon solid fa-language">
+                              <span class="label"></span>عربي
+                           </button>
+                         {% endif %}
+                        </form>
                         <!-- Nav Item - Alerts -->
 
                         <div class="topbar-divider d-none d-sm-block"></div>
+
+
 
                         <!-- Nav Item - User Information -->
                         <li class="nav-item dropdown no-arrow">
@@ -146,21 +162,26 @@
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="userDropdown">
+                                <a class="dropdown-item" href="{% url 'user:register' %}">
+                                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    {% trans "Create a new account" %}
+                                </a>
                                 <a class="dropdown-item" href="#">
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    ملف شخصي
+                                    {% trans "profile" %}
                                 </a>
                                 <a class="dropdown-item" href="#">
                                     <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    اعدادات
+                                    {% trans "settings" %}
                                 </a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    تسجيل الخروج
+                                    {% trans "logout" %}
                                 </a>
                             </div>
                         </li>
+
 
                     </ul>
 
@@ -202,15 +223,34 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">هل حقا ترغب في تسجيل خروجك</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">{% trans "Do you really want to be logged out" %}</h5>
                     <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
-                <div class="modal-body">أذا ترغب حقا في الخروج فا اضغط علي تسجيل الخروج</div>
+                <div class="modal-body">{% trans "If you really want to log out, press logout" %}</div>
                 <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">الغاء الامر</button>
-                    <a class="btn btn-primary" href="{% url 'user:logout' %}">تسجيل الخروج</a>
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">{% trans "Cancel" %}</button>
+                    <a class="btn btn-primary" href="{% url 'user:logout' %}"> {% trans "logout" %}</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="DeleteAllModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">{% trans "Do you really want to clear all the question papers?" %}</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">{% trans "If you really want to erase the papers, click on Clear" %}</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">{% trans "Cancel" %}</button>
+                    <a class="btn btn-primary" href="{% url "paper:delete-papers" %}">{% trans "Delete" %}</a>
                 </div>
             </div>
         </div>

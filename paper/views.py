@@ -1,7 +1,9 @@
+from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 import cv2
+from django.utils.translation import gettext_lazy as _
 
 from paper.correction import chack_answer
 from paper.forms import paperForm
@@ -26,24 +28,33 @@ def home(request):
             # function of correction
             correction = chack_answer(c_img_arr, s_img_arr)
 
-            messages.success(
-                request, 'تهانينا  لقد تمت عملية التصحيح بنجاح.')
+            msg = _(
+                'Congratulations, your correction has been successful.')
+            messages.add_message(request, messages.SUCCESS, msg)
             return correction
     else:
         form = paperForm()
 
     return render(request, 'paper/index.html', {
-        'title': 'الرئيسي',
+        'title': _('home'),
         'form': form,
     }, )
 
 
 @login_required(login_url='/login/')
 def paper_list(request):
-    # get last data
+    # get data
     q = Correct.objects.all()
     return render(request, 'paper/paper.html', {
-        'title': 'الاوراق',
+        'title': _('papers'),
         'q': q,
 
     }, )
+
+
+@login_required(login_url='/login/')
+def delete_all_papers(request):
+    # delete all data
+    q = Correct.objects.all().delete()
+
+    return HttpResponseRedirect("/")

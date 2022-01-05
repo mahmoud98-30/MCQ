@@ -5,9 +5,9 @@ from paper.models import Correct
 
 
 class paperForm(forms.ModelForm):
-    title = forms.CharField(label='اسم المادة')
-    correct_image = forms.ImageField(label='ورقة النموذج الصحيحه')
-    answer_image = forms.ImageField(label='ورقة الطالب')
+    title = forms.CharField()
+    correct_image = forms.ImageField()
+    answer_image = forms.ImageField()
 
     class Meta:
         labels = {'title': _('title'), 'correct_image': _('correct_image'),

@@ -3,9 +3,10 @@ from django.http import HttpResponse
 import cv2
 import numpy as np
 import xlsxwriter
+from django.utils.translation import gettext_lazy as _
 
 
-## TO STACK ALL THE IMAGES IN ONE WINDOW
+# TO STACK ALL THE IMAGES IN ONE WINDOW
 def stackImages(imgArray, scale, lables=[]):
     rows = len(imgArray)
     cols = len(imgArray[0])

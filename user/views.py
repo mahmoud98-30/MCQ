@@ -1,10 +1,13 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth import login, authenticate, logout
+from django.utils.translation import gettext_lazy as _
 
 from .forms import UserCreationForm, LoginForm, UserUpdateForm
 
 
+@login_required(login_url='/login/')
 def register(request):
     # form = UserCreationForm()
     if request.method == 'POST':
@@ -14,13 +17,14 @@ def register(request):
             new_user.set_password(form.cleaned_data['password1'])
             username = form.cleaned_data.get('username')
             new_user.save()
-            messages.success(
-                request, f'تهانينا {username} لقد تمت عملية التسجيل بنجاح.')
+            msg = _(
+                f'Congratulations {username} Your registration has been completed successfully.')
+            messages.add_message(request, messages.SUCCESS, msg)
             return redirect('/login/')
     else:
         form = UserCreationForm()
     return render(request, 'user/register.html', {
-        'title': 'التسجيل',
+        'title': _('register'),
         'form': form,
     }, )
 
@@ -34,9 +38,10 @@ def login_user(request):
             login(request, user)
             return redirect('/')
         else:
-            messages.warning(request, 'هناك خطا في اسم المستخدم او كلمة المرور')
+            msg = _('There is an error in the username or password')
+            messages.add_message(request, messages.WARNING, msg)
     return render(request, 'user/login.html', {
-        'title': 'تسجيل الدخول',
+        'title': _('Login'),
     })
 
 

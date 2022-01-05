@@ -1,10 +1,22 @@
 {% extends 'paper/base.html' %}
+{% load i18n %}
 {% load static %}
 {% block body %}
 {% load crispy_forms_tags %}
      <div class="container-fluid">
-
-
+     <div class="row mt-30" >
+     {% for paper in q %}
+         <a style="text-decoration: none;" href="#">
+         <div class="card border-primary mt-3 ml-3 " style="max-width: 18rem;">
+          <div class="card-header">{{ paper.title }}</div>
+          <div class="card-body text-primary">
+          <img class="card-img-top" style="width: 259px; height:180px;"
+                src="{{paper.correct_image.url}}" alt="{{paper.title}}">
+          </div>
+        </div>
+         </a>
+     {% endfor %}
+      </div>
      </div>
 {% endblock body%}
 
