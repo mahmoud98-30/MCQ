@@ -8,7 +8,7 @@
 
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">{% trans "correct answer" %}</h1>
+                        <h1 class="h3 mb-0 text-gray-800">{% trans "Correct Answer" %}</h1>
                         <a href="{% static 'paper/img/form.pdf' %}" download="{% trans "Download the question form" %}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
                                 class="fas fa-download fa-sm text-white-50"></i>{% trans "Download the question form" %}</a>
                         <a href="{% static 'paper/img/C.jpg' %}" download="{% trans "Download the correct answer sheet demo" %}" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm"><i
@@ -28,14 +28,31 @@
                     <!-- Content Row -->
                     <div class="row" class="form-group"  style="justify-content: center;">
                         <div class="border p-4 mb-5 ">
-                            <legend class="border-bottom pb-1 mb-3 ">{% trans "upload paper" %}</legend>
+                            <legend class="border-bottom pb-1 mb-3 ">{% trans "Upload Paper" %}</legend>
                             <form method="POST" enctype='multipart/form-data'>
-                                {% csrf_token %}
-                                {{form|crispy}}
-                                 <input class="btn btn-primary check-answer" id="check-answer" type="submit" value="{% trans "correction" %}">
+                              {% csrf_token %}
+                              <div class="form-group">
+                                  <div class="mb-3">
+                                        <label class="requiredField" for="id_title">{% trans "Subject" %}</label>
+                                        <input type="text"data-form-type="title" id="id_title" name="title" class="form-control" placeholder="{% trans "subject" %}">
+                                        <small id="emailHelp" class="form-text text-muted">{% trans "enter the subject name" %}</small>
+                                  </div>
+                                  <div class="">
+                                      <div class="mb-3">
+                                          <label for="id_correct_image"class="requiredField">{% trans "Correct image" %}</label>
+                                          <input type="file" id="id_correct_image" required accept="image/*" name="correct_image" class="form-control-file">
+                                      </div>
+                                      <div class="mb-3">
+                                           <label for="exampleFormControlFile2">{% trans "Answer image" %}</label>
+                                           <input type="file" id="id_answer_image" required  accept="image/*" name="answer_image" class="form-control-file">
+                                      </div>
+                                  </div>
+
+                                <input class="btn btn-primary check-answer" id="check-answer" type="submit" value="{% trans "Correction" %}">
+
+                              </div>
                             </form>
                         </div>
-
                     </div>
      </div>
 
