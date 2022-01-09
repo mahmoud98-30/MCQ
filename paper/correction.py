@@ -1,9 +1,10 @@
 import cv2
 import numpy as np
 import paper.utlis as utlis
+from django.contrib import messages
+from django.utils.translation import gettext_lazy as _
 
-
-def chack_answer(CorrectAnswerArray, StudentAnswerArray):
+def chack_answer(request,CorrectAnswerArray, StudentAnswerArray):
     # the parameters
     c_arr = CorrectAnswerArray
     s_arr = StudentAnswerArray
@@ -206,11 +207,20 @@ def chack_answer(CorrectAnswerArray, StudentAnswerArray):
         # stackedImage = utlis.stackImages(imageArray, 0.5)
         # cv2.imshow("Result", stackedImage)
         # cv2.waitKey(0)
+        return excel_file
     elif SRecNum == rect_num and CRecNum != rect_num:
-        print('The Scan Of Correct Answer Paper Is Bad')
-    elif CRecNum == rect_num and SRecNum != rect_num:
-        print('The Scan Of Student Answer Paper Is Bad')
-    else:
-        print('Each Paper is have bad scan')
+        msg = _(
+            'The Scan Of Correct Answer Paper Is Bad.')
+        messages.add_message(request, messages.WARNING, msg)
 
-    return excel_file
+    elif CRecNum == rect_num and SRecNum != rect_num:
+        msg = _(
+            'The Scan Of Student Answer Paper Is Bad.')
+        messages.add_message(request, messages.WARNING, msg)
+    else:
+        msg = _(
+            'Each Paper is have bad scan.')
+        messages.add_message(request, messages.WARNING, msg)
+
+
+

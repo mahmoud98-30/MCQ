@@ -56,5 +56,4 @@ def paper_list(request):
 def delete_all_papers(request):
     # delete all data
     q = Correct.objects.all().delete()
-
     return HttpResponseRedirect("/")
