@@ -160,7 +160,7 @@ msgstr "تهانينه لقد تم التصحيح بنجاح"
 
 #: .\paper\views.py:39
 msgid "home"
-msgstr "الرئيس"
+msgstr "الرئيسي"
 
 #: .\paper\views.py:49
 msgid "papers"

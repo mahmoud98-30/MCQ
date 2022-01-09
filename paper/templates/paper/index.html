@@ -27,28 +27,29 @@
 
                     <!-- Content Row -->
                     <div class="row" class="form-group"  style="justify-content: center;">
-                        <div class="border p-4 mb-5 ">
-                            <legend class="border-bottom pb-1 mb-3 ">{% trans "Upload Paper" %}</legend>
+                        <div class="border p-4 mb-5 " style="display: contents;">
+
                             <form method="POST" enctype='multipart/form-data'>
+                                <legend class="border-bottom pb-1 mb-3 d-flex">{% trans "Upload Paper" %}</legend>
                               {% csrf_token %}
                               <div class="form-group">
                                   <div class="mb-3">
-                                        <label class="requiredField" for="id_title">{% trans "Subject" %}</label>
-                                        <input type="text"data-form-type="title" id="id_title" name="title" class="form-control" placeholder="{% trans "subject" %}">
-                                        <small id="emailHelp" class="form-text text-muted">{% trans "enter the subject name" %}</small>
+{#                                        <label class="requiredField d-flex" for="id_title">{% trans "Subject" %}</label>#}
+                                        <input type="text"data-form-type="title" id="id_title" name="title" class="form-control d-flex" placeholder="{% trans "subject" %}">
+                                        <small id="emailHelp" class="form-text text-muted d-flex">{% trans "enter the subject name" %}</small>
                                   </div>
                                   <div class="">
                                       <div class="mb-3">
-                                          <label for="id_correct_image"class="requiredField">{% trans "Correct image" %}</label>
+                                          <label for="id_correct_image"class="requiredField d-flex">{% trans "Correct image" %}</label>
                                           <input type="file" id="id_correct_image" required accept="image/*" name="correct_image" class="form-control-file">
                                       </div>
                                       <div class="mb-3">
-                                           <label for="exampleFormControlFile2">{% trans "Answer image" %}</label>
+                                           <label for="exampleFormControlFile2"class="requiredField d-flex">{% trans "Answer image" %}</label>
                                            <input type="file" id="id_answer_image" required  accept="image/*" name="answer_image" class="form-control-file">
                                       </div>
                                   </div>
 
-                                <input class="btn btn-primary check-answer" id="check-answer" type="submit" value="{% trans "Correction" %}">
+                                <input class="btn btn-primary d-flex check-answer" id="check-answer" type="submit" value="{% trans "Correction" %}">
 
                               </div>
                             </form>

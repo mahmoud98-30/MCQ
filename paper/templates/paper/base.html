@@ -38,6 +38,10 @@
           background-position: center;
           background-size: cover;
         }
+        .fa-fw {
+            text-align: center;
+            width: 2.25em;
+        }
     </style>
 
 </head>
@@ -63,7 +67,7 @@
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
-                <a class="nav-link" href="{{ home }}/">
+                <a class="nav-link d-flex" href="{{ home }}/">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>{% trans "correction" %}</span></a>
             </li>
@@ -72,20 +76,20 @@
             <hr class="sidebar-divider">
 
             <!-- Heading -->
-            <div class="sidebar-heading">
+            <div class="sidebar-heading d-flex">
                 {% trans "Papers and settings" %}
             </div>
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
-                <a class="nav-link" href="{% url "paper:paper-list" %}">
+                <a class="nav-link d-flex" href="{% url "paper:paper-list" %}">
                     <i class="fas fa-fw far fa-copy"></i>
                     <span>{% trans "Question and answer sheets" %}</span></a>
             </li>
 
              <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
-                <a class="nav-link" data-toggle="modal" data-target="#DeleteAllModal">
+                <a class="nav-link d-flex" data-toggle="modal" data-target="#DeleteAllModal">
                     <i class="fas fa-fw far fa-cog"></i>
                     <span>{% trans "Delete all data" %} </span></a>
             </li>
@@ -94,14 +98,14 @@
             <hr class="sidebar-divider">
 
             <!-- Heading -->
-            <div class="sidebar-heading">
+            <div class="sidebar-heading d-flex">
                 {% trans "Exit" %}
             </div>
 
                 <!-- Nav Item - Dashboard -->
-            <li class="nav-item active">
-                <a class="nav-link" data-toggle="modal" data-target="#logoutModal">
-                    <i class="fas fa-sign-out-alt"></i>
+            <li class="nav-item active ">
+                <a class="nav-link d-flex" data-toggle="modal" data-target="#logoutModal">
+                    <i class="fas fa-fw far fa-sign-out-alt"></i>
                     <span>{% trans "logout" %}</span></a>
             </li>
 
@@ -123,7 +127,7 @@
             <div id="content">
 
                 <!-- Topbar -->
-                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow" >
+                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow " >
 
                     <!-- Sidebar Toggle (Topbar) -->
                     <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
@@ -132,7 +136,7 @@
 
 
                     <!-- Topbar Navbar -->
-                    <ul class="navbar-nav ml-auto">
+                    <ul class="navbar-nav {% if LANGUAGE_BIDI %}mr-auto{% else %}ml-auto{% endif %}">
 
 
                     <form action="{% url 'set_language' %}" method="post">{% csrf_token %}
@@ -161,7 +165,7 @@
                                     src="{% static 'paper/img/undraw_profile.svg' %}">
                             </a>
                             <!-- Dropdown - User Information -->
-                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                            <div class="dropdown-menu {% if LANGUAGE_BIDI %}dropdown-menu-left{% else %}dropdown-menu-right{% endif %} shadow animated--grow-in"
                                 aria-labelledby="userDropdown">
                                 <a class="dropdown-item" href="{% url 'user:register' %}">
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
@@ -225,7 +229,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">{% trans "Do you really want to be logged out" %}</h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close"style="display: contents;">
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
@@ -244,7 +248,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">{% trans "Do you really want to clear all the question papers?" %}</h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close" style="display: contents;">
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
