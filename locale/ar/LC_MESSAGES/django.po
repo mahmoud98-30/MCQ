@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-08 12:30+0200\n"
+"POT-Creation-Date: 2022-01-11 14:45+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -21,204 +21,218 @@ msgstr ""
 
 #: .\MCQ\settings.py:138
 msgid "Arabic"
-msgstr "عربي"
+msgstr "????"
 
 #: .\MCQ\settings.py:139
 msgid "English"
-msgstr "أنجليزي"
+msgstr "???????"
+
+#: .\paper\correction.py:213
+msgid "The Scan Of Correct Answer Paper Is Bad."
+msgstr "???? ??? ?? ?????? ?????????"
+
+#: .\paper\correction.py:218
+msgid "The Scan Of Student Answer Paper Is Bad."
+msgstr "???? ??? ?? ?????? ??????"
+
+#: .\paper\correction.py:222
+msgid "Each Paper is have bad scan."
+msgstr "???? ??? ?? ????????"
 
 #: .\paper\forms.py:13
 msgid "title"
-msgstr "عنوان"
+msgstr "?????"
 
 #: .\paper\forms.py:13
 msgid "correct_image"
-msgstr "صورة الورقة الصحيحه"
+msgstr "???? ???????"
 
 #: .\paper\forms.py:14
 msgid "answer_image"
-msgstr "صورة ورقة الطالب"
+msgstr "???? ??????"
 
 #: .\paper\models.py:16
 msgid "Correct"
-msgstr "تصحيح"
+msgstr "?????"
 
 #: .\paper\models.py:17
 msgid "Corrects"
-msgstr "تصحيح"
+msgstr "?????"
 
 #: .\paper\templates\paper\base.html:16 .\paper\templates\paper\base.html:18
-#: .\paper\templates\paper\base.html:58 .\paper\templates\paper\base.html:68
+#: .\paper\templates\paper\base.html:62 .\paper\templates\paper\base.html:72
 msgid "correction"
-msgstr "تصحيح"
+msgstr "???????"
 
-#: .\paper\templates\paper\base.html:76
+#: .\paper\templates\paper\base.html:80
 msgid "Papers and settings"
-msgstr "أوراق و الأعدادات"
+msgstr "????? ? ???????"
 
-#: .\paper\templates\paper\base.html:83
+#: .\paper\templates\paper\base.html:87
 msgid "Question and answer sheets"
-msgstr "أوراق الاجابه و الأسئلة"
+msgstr "???? ??????? ? ??????"
 
-#: .\paper\templates\paper\base.html:90
+#: .\paper\templates\paper\base.html:94
 msgid "Delete all data"
-msgstr "مسح كل البيانات"
+msgstr "??? ?? ????????"
 
-#: .\paper\templates\paper\base.html:98
+#: .\paper\templates\paper\base.html:102
 msgid "Exit"
-msgstr "خروج"
+msgstr "????"
 
-#: .\paper\templates\paper\base.html:105 .\paper\templates\paper\base.html:181
-#: .\paper\templates\paper\base.html:235
+#: .\paper\templates\paper\base.html:109 .\paper\templates\paper\base.html:185
+#: .\paper\templates\paper\base.html:239
 msgid "logout"
-msgstr "تسجيل الخروج"
+msgstr "????? ??????"
 
-#: .\paper\templates\paper\base.html:168 .\user\templates\user\register.html:13
+#: .\paper\templates\paper\base.html:172 .\user\templates\user\register.html:13
 #: .\user\templates\user\register.html:38
 msgid "Create a new account"
-msgstr "أنشاء حساب جديد"
-
-#: .\paper\templates\paper\base.html:172
-msgid "profile"
-msgstr "ملف شخصي"
+msgstr "????? ???? ????"
 
 #: .\paper\templates\paper\base.html:176
+msgid "profile"
+msgstr "??? ????"
+
+#: .\paper\templates\paper\base.html:180
 msgid "settings"
-msgstr "الأعدادات"
+msgstr "?????????"
 
-#: .\paper\templates\paper\base.html:227
+#: .\paper\templates\paper\base.html:231
 msgid "Do you really want to be logged out"
-msgstr "هل ترغب حقائص في تسجيل الخروج"
+msgstr "?? ??? ??? ?? ????? ???????"
 
-#: .\paper\templates\paper\base.html:232
+#: .\paper\templates\paper\base.html:236
 msgid "If you really want to log out, press logout"
-msgstr "أذا كنت ترغب في  الخروج اضغط علي تسجيل الخروج"
+msgstr "??? ???? ??? ?? ?????? ???? ??? ????? ??????"
 
-#: .\paper\templates\paper\base.html:234 .\paper\templates\paper\base.html:253
+#: .\paper\templates\paper\base.html:238 .\paper\templates\paper\base.html:257
 msgid "Cancel"
-msgstr "الغاء"
+msgstr "?????"
 
-#: .\paper\templates\paper\base.html:246
+#: .\paper\templates\paper\base.html:250
 msgid "Do you really want to clear all the question papers?"
-msgstr "هل ترغب حقاً في مسح كل الاوراق"
+msgstr "?? ???? ??? ??? ?? ?????????"
 
-#: .\paper\templates\paper\base.html:251
+#: .\paper\templates\paper\base.html:255
 msgid "If you really want to erase the papers, click on Clear"
-msgstr ""
+msgstr "??? ???? ??? ?? ??? ??????? ,???? ??? ???"
 
-#: .\paper\templates\paper\base.html:254
+#: .\paper\templates\paper\base.html:258
 msgid "Delete"
-msgstr "مسح"
+msgstr "???"
 
 #: .\paper\templates\paper\index.html:11
 msgid "Correct Answer"
-msgstr "الأجابة الصحيحه"
+msgstr "?????? ???????"
 
 #: .\paper\templates\paper\index.html:12 .\paper\templates\paper\index.html:13
 msgid "Download the question form"
-msgstr "تحميل الورقة النمودجية"
+msgstr "????? ?????? ?????????"
 
 #: .\paper\templates\paper\index.html:14 .\paper\templates\paper\index.html:15
 msgid "Download the correct answer sheet demo"
-msgstr "تحميل ورقة الاجابة الصحيحه التجريبية"
+msgstr "????? ???? ??????? ?????????"
 
 #: .\paper\templates\paper\index.html:16 .\paper\templates\paper\index.html:17
 msgid "Download Student's Answer Sheet Demo"
-msgstr "تحميل ورقة اجابة الطالب التجريبية"
+msgstr "????? ?????????? ?????????"
 
-#: .\paper\templates\paper\index.html:31
+#: .\paper\templates\paper\index.html:33
 msgid "Upload Paper"
-msgstr "تحميل الاوراق"
-
-#: .\paper\templates\paper\index.html:36
-msgid "Subject"
-msgstr "مادة"
-
-#: .\paper\templates\paper\index.html:37
-msgid "subject"
-msgstr "مادة"
+msgstr "??? ???????"
 
 #: .\paper\templates\paper\index.html:38
+msgid "subject"
+msgstr "??? ??????"
+
+#: .\paper\templates\paper\index.html:39
 msgid "enter the subject name"
-msgstr "أدخل اسم المادة"
+msgstr "???? ??? ??????"
 
-#: .\paper\templates\paper\index.html:42
+#: .\paper\templates\paper\index.html:43
 msgid "Correct image"
-msgstr "الورقة الصحيحه"
+msgstr "?????? ???????"
 
-#: .\paper\templates\paper\index.html:46
+#: .\paper\templates\paper\index.html:47
 msgid "Answer image"
-msgstr "ورقة الطالب"
+msgstr "???? ????? ??????"
 
-#: .\paper\templates\paper\index.html:51
+#: .\paper\templates\paper\index.html:52
 msgid "Correction"
-msgstr "تصحيح"
+msgstr "???????"
 
 #: .\paper\views.py:32
 msgid "Congratulations, your correction has been successful."
-msgstr "تهانينه لقد تم التصحيح بنجاح"
+msgstr "???????, ?? ????? ??????? ?????."
 
 #: .\paper\views.py:39
 msgid "home"
-msgstr "الرئيسي"
+msgstr "???????"
 
 #: .\paper\views.py:49
 msgid "papers"
-msgstr "اوراق"
+msgstr "???????"
 
 #: .\user\forms.py:20
 msgid "Password does not match"
-msgstr "كلمة المرور غير مطابقة"
+msgstr "????? ????? ??? ?????"
 
 #: .\user\forms.py:26
 msgid "There is a registered user with this name."
-msgstr "اسم المستخدم موجود"
+msgstr "??? ???????? ????? ?????"
 
 #: .\user\forms.py:35
 msgid "The email is already email"
-msgstr "البريد الاكتروني موجود مسبقا"
+msgstr "?????? ?????????? ????? ?????"
 
 #: .\user\templates\user\login.html:14 .\user\templates\user\login.html:58
 #: .\user\views.py:45
 msgid "Login"
-msgstr "تسجيل الدخول"
+msgstr "????? ??????"
 
 #: .\user\templates\user\login.html:44
 msgid "welcome"
-msgstr "اهلا و سهلا"
+msgstr "???? ?????"
 
 #: .\user\templates\user\login.html:51
 msgid "Enter your email address"
-msgstr "أدخل البريد الاكتروني"
+msgstr "???? ????? ??????????"
 
 #: .\user\templates\user\login.html:55 .\user\templates\user\register.html:59
 msgid "Password"
-msgstr "كلمة المرورو"
+msgstr "???? ??????"
 
 #: .\user\templates\user\login.html:63
 msgid "did you forget your password?"
-msgstr "هل نسيت كلمة المرور"
+msgstr "?? ???? ???? ??????"
 
 #: .\user\templates\user\register.html:46
 msgid "username"
-msgstr "اسم المستخدم"
+msgstr "??? ????????"
 
 #: .\user\templates\user\register.html:50
 msgid "email"
-msgstr "البريد الألكتروني"
+msgstr "?????? ??????????"
 
 #: .\user\templates\user\register.html:63
 msgid "confirm password"
-msgstr "تأكيد كلمة المرور"
+msgstr "????? ???? ??????"
 
 #: .\user\templates\user\register.html:66
 msgid "Create an account"
-msgstr "أنشاء حساب جديد"
+msgstr "????? ????"
+
+#: .\user\views.py:22
+#, python-brace-format
+msgid ""
+"Congratulations {username} Your registration has been completed successfully."
+msgstr "???????{username}, ??? ?? ????? ??????? ????? "
 
 #: .\user\views.py:28
 msgid "register"
-msgstr "تسجيل"
+msgstr "?????"
 
 #: .\user\views.py:42
 msgid "There is an error in the username or password"
-msgstr "يوجد خطأ في اسم المستخدم او كلمة المرور"
+msgstr "???? ??? ?? ??? ???????? ?? ???? ??????"

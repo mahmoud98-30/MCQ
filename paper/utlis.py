@@ -63,6 +63,13 @@ def reorder(myPoints):
     return myPointsNew
 
 
+def y_contour(contours):
+    # Returns the Y cordinate for the contour centroid
+    # sort contours up to bottom lift to right
+    M = cv2.moments(contours)
+    return (int(M['m01'] / M['m00']))
+
+
 def rectContour(contours):
     rectCon = []
     max_area = 0
@@ -76,6 +83,7 @@ def rectContour(contours):
             # print(len(approx))
             if len(approx) == 4:
                 rectCon.append(i)
+    rectCon = sorted(rectCon, key=y_contour, reverse=False)
     # print(rectCon)
     # print('-----------------------------------------------------')
     print(len(rectCon))
@@ -170,6 +178,13 @@ def ExportExcel(TotelGRADING, TotelScore, PercentScore, CorrectAns, StudentAns):
     print('##################################')
 
     # Header
+    student_name = "Student Name"
+    No_que = "Number Of Question"
+    result = "Result"
+    stu_answer = "Student Answer"
+    corr_ans = "Correct Answer"
+    result_percent = "Result By Percent"
+
     sheet.write("A1", "اسم الطالب")
     sheet.write("A2", "رقم السؤال")
     sheet.write("A3", "الناتج")
@@ -181,6 +196,8 @@ def ExportExcel(TotelGRADING, TotelScore, PercentScore, CorrectAns, StudentAns):
     for num in range(1, 101):
         que_num.append(num)
 
+    correct = "Correct"
+    wrong = "Wrong"
     GRADING = []
     for gra in TotelGRADING:
         if gra == 0:
@@ -189,12 +206,36 @@ def ExportExcel(TotelGRADING, TotelScore, PercentScore, CorrectAns, StudentAns):
             GRADING.append("صحيح")
     # print(GRADING)
 
+    Correct = []
+    for cor in CorrectAns:
+        if cor == 0:
+            Correct.append("A")
+        elif cor == 1:
+            Correct.append("B")
+        elif cor == 2:
+            Correct.append("C")
+        else:
+            Correct.append("D")
+    # print(Correct)
+
+    Student = []
+    for stu in StudentAns:
+        if stu == 0:
+            Student.append("A")
+        elif stu == 1:
+            Student.append("B")
+        elif stu == 2:
+            Student.append("C")
+        else:
+            Student.append("D")
+    # print(Student)
+
     # write data in file
     for item in range(len(que_num)):
         sheet.write(1, item + 1, que_num[item])
         sheet.write(2, item + 1, GRADING[item])
-        sheet.write(3, item + 1, StudentAns[item])
-        sheet.write(4, item + 1, CorrectAns[item])
+        sheet.write(3, item + 1, Student[item])
+        sheet.write(4, item + 1, Correct[item])
 
     sheet.write("A8", PercentScore)
 

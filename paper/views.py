@@ -13,7 +13,7 @@ from paper.models import Correct
 @login_required(login_url='/login/')
 def home(request):
     if request.method == 'POST':
-        form = paperForm(request.POST, request.FILES)
+        form = paperForm(request.POST, request.FILES or None)
         if form.is_valid():
             form = form.save(commit=False)
             form.save()
@@ -26,18 +26,14 @@ def home(request):
             s_img_arr = cv2.imread(q.answer_image.path)
 
             # function of correction
-            correction = chack_answer(c_img_arr, s_img_arr)
+            correction = chack_answer(request, c_img_arr, s_img_arr)
 
             msg = _(
                 'Congratulations, your correction has been successful.')
             messages.add_message(request, messages.SUCCESS, msg)
             return correction
-    else:
-        form = paperForm()
-
     return render(request, 'paper/index.html', {
         'title': _('home'),
-        'form': form,
     }, )
 
 

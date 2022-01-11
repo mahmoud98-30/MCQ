@@ -4,7 +4,8 @@ import paper.utlis as utlis
 from django.contrib import messages
 from django.utils.translation import gettext_lazy as _
 
-def chack_answer(request,CorrectAnswerArray, StudentAnswerArray):
+
+def chack_answer(request, CorrectAnswerArray, StudentAnswerArray):
     # the parameters
     c_arr = CorrectAnswerArray
     s_arr = StudentAnswerArray
@@ -221,6 +222,3 @@ def chack_answer(request,CorrectAnswerArray, StudentAnswerArray):
         msg = _(
             'Each Paper is have bad scan.')
         messages.add_message(request, messages.WARNING, msg)
-
-
-
