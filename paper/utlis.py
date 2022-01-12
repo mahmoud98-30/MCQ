@@ -76,14 +76,16 @@ def rectContour(contours):
     for i in contours:
         area = cv2.contourArea(i)
         # print(area)
-        if 350 < area < 19000:
+        # if 350 < area < 19000:
+        if 10000 < area < 20000:
             peri = cv2.arcLength(i, True)
             approx = cv2.approxPolyDP(i, 0.02 * peri, True)
             # print('-----------------------------')
             # print(len(approx))
             if len(approx) == 4:
                 rectCon.append(i)
-    rectCon = sorted(rectCon, key=y_contour, reverse=False)
+    # sort contours
+    rectCon = sorted(rectCon, key=lambda ctr: cv2.boundingRect(ctr)[0] + cv2.boundingRect(ctr)[1] * 3)
     # print(rectCon)
     # print('-----------------------------------------------------')
     print(len(rectCon))
