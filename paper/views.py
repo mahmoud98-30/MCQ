@@ -23,8 +23,8 @@ def home(request):
 
             # convert image to array
             try:
-                c_img_arr = cv2.imread(q.correct_image.path)
-                s_img_arr = cv2.imread(q.answer_image.path)
+                c_img_arr = plt.imread(q.correct_image.path)
+                s_img_arr = plt.imread(q.answer_image.path)
             except:
                 c_img_arr = plt.imread(q.correct_image.path)
                 s_img_arr = plt.imread(q.answer_image.path)
