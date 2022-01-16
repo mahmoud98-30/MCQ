@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 import cv2
 from django.utils.translation import gettext_lazy as _
-
+import matplotlib.pyplot as plt
 from paper.correction import chack_answer
 from paper.forms import paperForm
 from paper.models import Correct
@@ -22,8 +22,13 @@ def home(request):
             q = Correct.objects.latest('creat_at')
 
             # convert image to array
-            c_img_arr = cv2.imread(q.correct_image.path)
-            s_img_arr = cv2.imread(q.answer_image.path)
+            try:
+                c_img_arr = cv2.imread(q.correct_image.path)
+                s_img_arr = cv2.imread(q.answer_image.path)
+            except:
+                c_img_arr = plt.imread(q.correct_image.path)
+                s_img_arr = plt.imread(q.answer_image.path)
+
 
             # function of correction
             correction = chack_answer(request, c_img_arr, s_img_arr)
