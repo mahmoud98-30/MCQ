@@ -1,0 +1,51 @@
+{% extends 'paper/base.html' %}
+{% load i18n %}
+{% load static %}
+{% block body %}
+{% load crispy_forms_tags %}
+
+     <div class="container-fluid">
+
+                    <!-- Page Heading -->
+                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                        <h1 class="h3 mb-0 text-gray-800">{% trans "Correct Answer" %}</h1>
+                        <a href="{% static 'paper/img/form.pdf' %}" download="{% trans "Download the question form" %}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+                                class="fas fa-download fa-sm text-white-50"></i>{% trans "Download the question form" %}</a>
+                        <a href="{% static 'paper/img/C.jpg' %}" download="{% trans "Download the correct answer sheet demo" %}" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm"><i
+                                class="fas fa-download fa-sm text-white-50"></i>{% trans "Download the correct answer sheet demo" %}</a>
+                        <a href="{% static 'paper/img/S.jpg' %}" download="{% trans "Download Student's Answer Sheet Demo" %}" class="d-none d-sm-inline-block btn btn-sm btn-danger shadow-sm"><i
+                                class="fas fa-download fa-sm text-white-50"></i>{% trans "Download Student's Answer Sheet Demo" %}</a>
+                    </div>
+
+                     {% if messages %}
+                     {% for message in messages %}
+                     <div class="alert alert-{{message.tags}}">
+                        {{message}}
+                     </div>
+                     {% endfor %}
+                     {% endif %}
+
+                    <!-- Content Row -->
+                    <div class="row" class="form-group"  style="justify-content: center;">
+                        <div class="border p-4 mb-5 " style="display: contents;">
+
+                            <form   method="POST" enctype='multipart/form-data'>
+                                <legend class="border-bottom pb-1 mb-3 d-flex">{% trans "Upload excel file" %}</legend>
+                              {% csrf_token %}
+                              <div class="form-group">
+                                  <div class="mb-3">
+{#                                        <label class="requiredField d-flex" for="id_title">{% trans "upload" %}</label>#}
+                                        <input type="file"data-form-type="title" id="id_uploadfile" name="uploadfile" class="form-control d-flex" placeholder="{% trans "upload" %}">
+
+                                  </div>
+
+                                <input class="btn btn-primary d-flex check-answer" id="check-answer" type="submit" value="{% trans "upload" %}">
+
+                              </div>
+                            </form>
+                        </div>
+                    </div>
+     </div>
+
+{% endblock body%}
+
