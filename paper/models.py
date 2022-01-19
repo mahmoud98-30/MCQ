@@ -1,6 +1,11 @@
+from random import random, randrange, getrandbits, randint
 from django.db import models
+from django.utils.safestring import mark_safe
 from django.utils.translation import gettext_lazy as _
 import qrcode
+from PIL import Image, ImageDraw
+from io import BytesIO
+from django.core.files import File
 
 
 class Correct(models.Model):
@@ -34,8 +39,18 @@ class Student(models.Model):
     def __str__(self):
         return self.name
 
+    def image_tag(self):
+        return mark_safe('<img src="{}" height="100"/>'.format(self.qr_code.url))
+
+    image_tag.short_description = 'Image'
+    image_tag.allow_tages = True
+
     def save(self, *args, **kwargs):
         data = self.id, self.name, self.teacher_name, self.subject
         img = qrcode.make(data)
-        img.save("qr.png")
+        buffer = BytesIO()
+        img.save(buffer)
+        self.qr_code.save(f'QR code{self.name,}, {randint(0, 9999)}.png', File(buffer), save=False)
+        img.close()
         super().save(*args, **kwargs)
+

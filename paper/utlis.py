@@ -4,6 +4,7 @@ import cv2
 import numpy as np
 import xlsxwriter
 from django.utils.translation import gettext_lazy as _
+import qrcode
 
 
 # TO STACK ALL THE IMAGES IN ONE WINDOW
@@ -256,3 +257,5 @@ def ExportExcel(TotelGRADING, TotelScore, PercentScore, CorrectAns, StudentAns):
     response['Content-Disposition'] = 'attachment; filename=%s' % filename
 
     return response
+
+

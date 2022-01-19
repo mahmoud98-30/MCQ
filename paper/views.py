@@ -63,9 +63,7 @@ def import_student_data(request):
         new_persons = request.FILES['uploadfile']
 
         imported_data = dataset.load(new_persons.read(), format='xlsx')
-        # print(imported_data)
         for data in imported_data:
-            print(data[1].encode("utf-8"))
             value = Student(
                 data[0],
                 data[1],
