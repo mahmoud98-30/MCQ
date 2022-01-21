@@ -28,8 +28,9 @@ class Correct(models.Model):
 
 class Student(models.Model):
     name = models.CharField(max_length=225)
-    teacher_name = models.CharField(max_length=225)
     subject = models.CharField(max_length=225)
+    class_room = models.CharField(max_length=225)
+    teacher_name = models.CharField(max_length=225)
     qr_code = models.ImageField(blank=True, upload_to='QR-code/', default='qrcode.png')
 
     class Meta:

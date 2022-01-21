@@ -1,21 +1,22 @@
 {% extends 'paper/base.html'%}
-{% block content %}
+{% load i18n %}
+{% block body %}
 {% load crispy_forms_tags %}
 
 <div class="border p-4 mb-5">
-    <legend class="border-bottom pb-1 mb-3">تعديل الملف الشخصي</legend>
+    <legend class="border-bottom pb-1 mb-3">{% trans "edit profile" %}</legend>
     <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         {{user_form|crispy}}
-        <!-- {{profile_form|crispy}} -->
-        <div>
-            <span class="mb-2" style="display: block">صورة الملف الشخصي *</span>
-            الصورة الحالية: <a href="{{user.profile.image.url}}">{{user.profile.image}}</a>
-            <br>
-            <label for="image" class="btn btn-outline-secondary mt-2">اختيار الصورة</label>
-            <input type="file" name="image" id="image" accept="image/*" style="display: none">
-        </div>
-        <input class="btn btn-secondary mt-4" type="submit" value="تعديل">
+        {{profile_form|crispy}}
+{#        <div>#}
+{#            <span class="mb-2" style="display: block">{% trans "image profile *" %}</span>#}
+{#            {% trans "image: " %} <a href="{{user.profile.image.url}}">{{user.profile.image}}</a>#}
+{#            <br>#}
+{#            <label for="image" class="btn btn-outline-secondary mt-2">{% trans "select image" %}</label>#}
+{#            <input type="file" name="image" id="image" accept="image/*" style="display: none">#}
+{#        </div>#}
+        <input class="btn btn-secondary mt-4" type="submit" value="{% trans "edit" %}">
     </form>
 </div>
-{% endblock content %}
+{% endblock body %}

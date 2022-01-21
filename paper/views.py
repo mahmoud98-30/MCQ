@@ -69,6 +69,7 @@ def import_student_data(request):
                 data[1],
                 data[2],
                 data[3],
+                data[4],
 
             )
             value.save()
@@ -79,7 +80,6 @@ def import_student_data(request):
         #    person_resource.import_data(dataset, dry_run=False)  # Actually import now
 
     return render(request, 'paper/import_student.html')
-
 
 
 @login_required(login_url='/login/')

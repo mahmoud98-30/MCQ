@@ -2,6 +2,8 @@ from django import forms
 from django.contrib.auth.models import User
 from django.utils.translation import gettext_lazy as _
 
+from user.models import Profile
+
 
 class UserCreationForm(forms.ModelForm):
     username = forms.CharField(max_length=30,
@@ -54,7 +56,8 @@ class UserUpdateForm(forms.ModelForm):
         model = User
         fields = ('first_name', 'last_name', 'email')
 
-# class ProfileUpdateForm(forms.ModelForm):
-#     class Meta:
-#         model = Profile
-#         fields = ('image',)
+
+class ProfileUpdateForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ('image', 'school_name', 'school_address')

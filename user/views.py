@@ -5,7 +5,8 @@ from django.contrib.auth import login, authenticate, logout
 from django.utils.translation import gettext_lazy as _
 from django.utils.translation.trans_null import ngettext_lazy
 
-from .forms import UserCreationForm, LoginForm, UserUpdateForm
+from .forms import UserCreationForm, LoginForm, UserUpdateForm, ProfileUpdateForm
+from .models import Profile
 
 
 @login_required(login_url='/login/')
@@ -49,3 +50,39 @@ def login_user(request):
 def logout_user(request):
     logout(request)
     return redirect('/login/')
+
+
+@login_required(login_url='/login/')
+def profile(request):
+    profile_data = Profile.objects.filter(user=request.user)
+    return render(request, 'user/profile.html', {
+        'title': _('profile'),
+        'profile_data': profile_data,
+
+    })
+
+
+@login_required(login_url='/login/')
+def profile_update(request):
+    if request.method == 'POST':
+        user_form = UserUpdateForm(request.POST, instance=request.user)
+        profile_form = ProfileUpdateForm(
+            request.POST, request.FILES, instance=request.user.profile)
+        if user_form.is_valid and profile_form.is_valid:
+            user_form.save()
+            profile_form.save()
+
+            msg = _('Modified successfully.')
+            messages.add_message(request, messages.SUCCESS, msg)
+
+            return redirect('/profile/')
+    else:
+        user_form = UserUpdateForm(instance=request.user)
+        profile_form = ProfileUpdateForm(instance=request.user.profile)
+
+    context = {
+        'title': _('profile update'),
+        'user_form': user_form,
+        'profile_form': profile_form,
+    }
+    return render(request, 'user/profile_update.html', context)
