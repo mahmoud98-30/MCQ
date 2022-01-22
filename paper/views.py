@@ -7,7 +7,7 @@ from django.utils.translation import gettext_lazy as _
 import matplotlib.pyplot as plt
 
 from paper.correction import chack_answer
-from paper.forms import paperForm, UploadStudentForm
+from paper.forms import paperForm
 from paper.models import Correct, Student
 from .resources import StudentResource
 
@@ -30,7 +30,6 @@ def home(request):
             except:
                 c_img_arr = plt.imread(q.correct_image.path)
                 s_img_arr = plt.imread(q.answer_image.path)
-
 
             # function of correction
             correction = chack_answer(request, c_img_arr, s_img_arr)
@@ -87,3 +86,64 @@ def delete_all_papers(request):
     # delete all data
     q = Correct.objects.all().delete()
     return HttpResponseRedirect("/")
+
+
+@login_required(login_url='/login/')
+def new_student(request):
+    pass
+
+
+@login_required(login_url='/login/')
+def update_student(request):
+    pass
+
+
+@login_required(login_url='/login/')
+def delete_student(request):
+    pass
+
+
+@login_required(login_url='/login/')
+def delete_all_students(request):
+    pass
+
+
+@login_required(login_url='/login/')
+def new_teacher(request):
+    pass
+
+
+@login_required(login_url='/login/')
+def update_teacher(request):
+    pass
+
+
+@login_required(login_url='/login/')
+def delete_teacher(request):
+    pass
+
+
+@login_required(login_url='/login/')
+def delete_all_teachers(request):
+    pass
+
+
+@login_required(login_url='/login/')
+def new_class(request):
+    pass
+
+
+@login_required(login_url='/login/')
+def update_class(request):
+    pass
+
+
+@login_required(login_url='/login/')
+def delete_class(request):
+    pass
+
+
+@login_required(login_url='/login/')
+def delete_all_class(request):
+    pass
+

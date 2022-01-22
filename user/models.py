@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from PIL import Image
+from django.utils.translation import gettext_lazy as _
 
 
 class Profile(models.Model):
@@ -9,6 +10,10 @@ class Profile(models.Model):
     school_name = models.CharField(max_length=225)
     school_address = models.CharField(max_length=225)
     user = models.OneToOneField(User, on_delete=models.CASCADE)
+
+    class Meta:
+        verbose_name = _('Profile')
+        verbose_name_plural = _('Profile')
 
     def __str__(self):
         return '{} profile.'.format(self.user.username)

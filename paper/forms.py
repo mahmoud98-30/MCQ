@@ -1,7 +1,7 @@
 from django import forms
 from django.utils.translation import ugettext_lazy as _
 
-from paper.models import Correct, Student
+from paper.models import Correct, Student, Teacher, Class
 
 
 class paperForm(forms.ModelForm):
@@ -16,10 +16,51 @@ class paperForm(forms.ModelForm):
         fields = ('title', 'correct_image', 'answer_image')
 
 
-class UploadStudentForm(forms.ModelForm):
+class CreateStudentForm(forms.ModelForm):
+    class Meta:
+        labels = {'name': _('name'), 'code': _('code'),
+                  'class_room': _('class_room'), 'teacher_name': _('teacher_name'), }
+        model = Student
+        fields = ('name', 'code', 'class_room', 'teacher_name')
 
+
+class UpdateStudentForm(forms.ModelForm):
+    class Meta:
+        labels = {'name': _('name'), 'code': _('code'),
+                  'class_room': _('class_room'), 'teacher_name': _('teacher_name'), }
+        model = Student
+        fields = ('name', 'code', 'class_room', 'teacher_name')
+
+
+class CreateTeacherForm(forms.ModelForm):
+    class Meta:
+        labels = {'name': _('name'), 'subject': _('subject'),
+                  }
+        model = Teacher
+        fields = ('name', 'subject', )
+
+
+class UpdateTeacherForm(forms.ModelForm):
+    class Meta:
+        labels = {'name': _('name'), 'subject': _('subject'),
+                  }
+        model = Teacher
+        fields = ('name', 'subject', )
+
+
+class CreateClassForm(forms.ModelForm):
     class Meta:
         labels = {'name': _('name'),
-                  'teacher_name': _('teacher_name'), 'subject': _('subject'), }
-        model = Student
-        fields = ('name', 'teacher_name', 'subject')
+                  }
+        model = Class
+        fields = ('name', )
+
+
+class UpdateClassForm(forms.ModelForm):
+    class Meta:
+        labels = {'name': _('name'),
+                  }
+        model = Class
+        fields = ('name', )
+
+
