@@ -1,5 +1,5 @@
 from django.http import HttpResponseRedirect, HttpResponse, HttpResponseBadRequest
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from tablib import Dataset
@@ -7,7 +7,8 @@ from django.utils.translation import gettext_lazy as _
 import matplotlib.pyplot as plt
 
 from paper.correction import chack_answer
-from paper.forms import paperForm, CreateStudentForm, CreateTeacherForm, CreateClassForm
+from paper.forms import paperForm, StudentForm, TeacherForm, ClassForm, UpdateStudentForm, UpdateTeacherForm, \
+    UpdateClassForm
 from paper.models import Correct, Student, Teacher, Class
 from .resources import StudentResource
 
@@ -90,14 +91,14 @@ def delete_all_papers(request):
 
 @login_required(login_url='/login/')
 def new_student(request):
-    form = CreateStudentForm(request.POST or None)
+    form = StudentForm(request.POST or None)
     if request.method == 'POST':
         if form.is_valid():
             form = form.save(commit=False)
             form.save()
             msg = _('done ')
             messages.add_message(request, messages.SUCCESS, msg)
-        form = CreateStudentForm()
+        form = StudentForm()
     student = Student.objects.all()
     return render(request, 'paper/student/new_student.html', {
         'title': _('new student'),
@@ -108,30 +109,42 @@ def new_student(request):
 
 @login_required(login_url='/login/')
 def update_student(request, fk):
-    pass
+
+    obj = get_object_or_404(Student, id=fk)
+    form = UpdateStudentForm(request.POST or None, instance=obj)
+
+    if form.is_valid():
+        form.save()
+        return HttpResponseRedirect("/new-student/")
+
+    return render(request, 'paper/student/update_student.html', {
+        'title': _('update student'),
+        'form': form,
+    })
 
 
 @login_required(login_url='/login/')
 def delete_student(request, fk):
-    q = Correct.objects.filter(id=fk).delete()
-    return HttpResponseRedirect("/")
+    Student.objects.filter(id=fk).delete()
+    return HttpResponseRedirect("/new-student/")
 
 
 @login_required(login_url='/login/')
 def delete_all_students(request):
-    pass
+    Student.objects.all()
+    return HttpResponseRedirect("/")
 
 
 @login_required(login_url='/login/')
 def new_teacher(request):
-    form = CreateTeacherForm(request.POST or None)
+    form = TeacherForm(request.POST or None)
     if request.method == 'POST':
         if form.is_valid():
             form = form.save(commit=False)
             form.save()
             msg = _('done ')
             messages.add_message(request, messages.SUCCESS, msg)
-        form = CreateTeacherForm()
+        form = TeacherForm()
     teacher = Teacher.objects.all()
     return render(request, 'paper/teacher/new_teacher.html', {
         'title': _('new teacher'),
@@ -141,30 +154,43 @@ def new_teacher(request):
 
 
 @login_required(login_url='/login/')
-def update_teacher(request):
-    pass
+def update_teacher(request, fk):
+
+    obj = get_object_or_404(Student, id=fk)
+    form = UpdateTeacherForm(request.POST or None, instance=obj)
+
+    if form.is_valid():
+        form.save()
+        return HttpResponseRedirect("/new-teacher/")
+
+    return render(request, 'paper/teacher/update_teacher.html', {
+        'title': _('update teacher'),
+        'form': form,
+    })
 
 
 @login_required(login_url='/login/')
-def delete_teacher(request):
-    pass
+def delete_teacher(request, fk):
+    Teacher.objects.filter(id=fk).delete()
+    return HttpResponseRedirect("/new-teacher/")
 
 
 @login_required(login_url='/login/')
 def delete_all_teachers(request):
-    pass
+    Teacher.objects.all()
+    return HttpResponseRedirect("/")
 
 
 @login_required(login_url='/login/')
 def new_class(request):
-    form = CreateClassForm(request.POST or None)
+    form = ClassForm(request.POST or None)
     if request.method == 'POST':
         if form.is_valid():
             form = form.save(commit=False)
             form.save()
             msg = _('done ')
             messages.add_message(request, messages.SUCCESS, msg)
-        form = CreateClassForm()
+        form = ClassForm()
     class_room = Class.objects.all()
     return render(request, 'paper/class/new_class.html', {
         'title': _('new class'),
@@ -174,16 +200,29 @@ def new_class(request):
 
 
 @login_required(login_url='/login/')
-def update_class(request):
-    pass
+def update_class(request, fk):
+
+    obj = get_object_or_404(Student, id=fk)
+    form = UpdateClassForm(request.POST or None, instance=obj)
+
+    if form.is_valid():
+        form.save()
+        return HttpResponseRedirect("/new-class/")
+
+    return render(request, 'paper/class/update_class.html', {
+        'title': _('update class'),
+        'form': form,
+    })
 
 
 @login_required(login_url='/login/')
-def delete_class(request):
-    pass
+def delete_class(request, fk):
+    Class.objects.filter(id=fk).delete()
+    return HttpResponseRedirect("/new-class/")
 
 
 @login_required(login_url='/login/')
 def delete_all_class(request):
-    pass
+    Class.objects.all()
+    return HttpResponseRedirect("/")
 

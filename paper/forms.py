@@ -16,7 +16,7 @@ class paperForm(forms.ModelForm):
         fields = ('title', 'correct_image', 'answer_image')
 
 
-class CreateStudentForm(forms.ModelForm):
+class StudentForm(forms.ModelForm):
     class Meta:
         labels = {'name': _('name'), 'code': _('code'),
                   'class_room': _('class_room'), 'teacher_name': _('teacher_name'), }
@@ -41,12 +41,12 @@ class UpdateStudentForm(forms.ModelForm):
         fields = ('name', 'code', 'class_room', 'teacher_name')
 
 
-class CreateTeacherForm(forms.ModelForm):
+class TeacherForm(forms.ModelForm):
     class Meta:
         labels = {'name': _('name'), 'subject': _('subject'),
                   }
         model = Teacher
-        fields = ('name', 'subject', )
+        fields = ('name', 'subject',)
 
 
 class UpdateTeacherForm(forms.ModelForm):
@@ -54,15 +54,15 @@ class UpdateTeacherForm(forms.ModelForm):
         labels = {'name': _('name'), 'subject': _('subject'),
                   }
         model = Teacher
-        fields = ('name', 'subject', )
+        fields = ('name', 'subject',)
 
 
-class CreateClassForm(forms.ModelForm):
+class ClassForm(forms.ModelForm):
     class Meta:
         labels = {'name': _('name'),
                   }
         model = Class
-        fields = ('name', )
+        fields = ('name',)
 
 
 class UpdateClassForm(forms.ModelForm):
@@ -70,6 +70,4 @@ class UpdateClassForm(forms.ModelForm):
         labels = {'name': _('name'),
                   }
         model = Class
-        fields = ('name', )
-
-
+        fields = ('name',)
