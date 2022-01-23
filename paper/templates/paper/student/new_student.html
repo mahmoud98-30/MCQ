@@ -1,10 +1,100 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'paper/base.html' %}
+{% load i18n %}
+{% load static %}
+{% block body %}
+{% load crispy_forms_tags %}
 
-</body>
-</html>
+
+
+     <div class="container-fluid">
+
+                    <!-- Page Heading -->
+                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                        <h1 class="h3 mb-0 text-gray-800">{% trans "Correct Answer" %}</h1>
+                        <a href="{% static 'paper/img/form.pdf' %}" download="{% trans "Download the question form" %}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+                                class="fas fa-download fa-sm text-white-50"></i>{% trans "Download the question form" %}</a>
+                        <a href="{% static 'paper/img/C.jpg' %}" download="{% trans "Download the correct answer sheet demo" %}" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm"><i
+                                class="fas fa-download fa-sm text-white-50"></i>{% trans "Download the correct answer sheet demo" %}</a>
+                        <a href="{% static 'paper/img/S.jpg' %}" download="{% trans "Download Student's Answer Sheet Demo" %}" class="d-none d-sm-inline-block btn btn-sm btn-danger shadow-sm"><i
+                                class="fas fa-download fa-sm text-white-50"></i>{% trans "Download Student's Answer Sheet Demo" %}</a>
+                    </div>
+
+                     {% if messages %}
+                     {% for message in messages %}
+                     <div class="alert alert-{{message.tags}}">
+                        {{message}}
+                     </div>
+                     {% endfor %}
+                     {% endif %}
+
+                    <!-- Content Row -->
+                    <div class="row" class="form-group"  style="justify-content: center;">
+                        <div class="border p-4 mb-5 " style="display: contents;">
+
+                            <form method="POST" enctype='multipart/form-data'>
+                                <legend class="border-bottom pb-1 mb-3 d-flex">{% trans "student table" %}</legend>
+                              {% csrf_token %}
+                              <div class="form-group">
+                                  <div class="">
+                                      {{form|crispy}}
+                                  </div>
+
+                                <input class="btn btn-primary d-flex check-answer" id="check-answer" type="submit" value="{% trans "enter" %}">
+
+                              </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- DataTales  -->
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">{% trans "student table" %}</h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th>{% trans "name" %}</th>
+                                            <th>{% trans "code" %}</th>
+                                            <th>{% trans "class room" %}</th>
+                                            <th>{% trans "teacher name" %}</th>
+                                            <th>{% trans "setting" %}</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for data in student %}
+                                        <tr>
+                                            <td>{{ data.name }}</td>
+                                            <td>{{ data.code }}</td>
+                                            <td>{{ data.class_room }}</td>
+                                            <td>{{ data.teacher_name }}</td>
+                                            <td>
+                                                <div class="dropdown no-arrow mb-4">
+                                                    <button class="btn btn-secondary dropdown-toggle" type="button"
+                                                        id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                                                        aria-expanded="false">
+                                                        {% trans "edit" %}-{% trans "delete" %}
+                                                    </button>
+                                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                        <a class="dropdown-item" href="{% url "paper:update-student" data.id %}">{% trans "edit" %}</a>
+                                                        <a class="dropdown-item" href="{% url "paper:delete-student" data.id %}">{% trans "delete" %}</a>
+
+                                                    </div>
+                                                </div>
+
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+     </div>
+
+
+{% endblock body%}
+

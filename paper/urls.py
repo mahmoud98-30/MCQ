@@ -11,18 +11,18 @@ urlpatterns = [
                   path('delete-papers/', views.delete_all_papers, name='delete-papers'),
 
                   path('new-student/', views.new_student, name='new-student'),
-                  path('update-student/', views.update_student, name='update-student'),
-                  path('delete-student/', views.delete_student, name='delete-student'),
+                  path('update-student/<int:id>/', views.update_student, name='update-student'),
+                  path('delete-student/<int:id>/', views.delete_student, name='delete-student'),
                   path('delete-all-students/', views.delete_all_students, name='delete-all-students'),
 
                   path('new-teacher/', views.new_teacher, name='new-teacher'),
-                  path('update-teacher/', views.update_teacher, name='update-teacher'),
-                  path('delete-teacher/', views.delete_teacher, name='delete-teacher'),
+                  path('update-teacher/<int:id>/', views.update_teacher, name='update-teacher'),
+                  path('delete-teacher/<int:id>/', views.delete_teacher, name='delete-teacher'),
                   path('delete-all-teachers/', views.delete_all_teachers, name='delete-all-teachers'),
 
                   path('new-class/', views.new_class, name='new-class'),
-                  path('update-class/', views.update_class, name='update-class'),
-                  path('delete-class/', views.delete_class, name='delete-class'),
+                  path('update-class/<int:id>/', views.update_class, name='update-class'),
+                  path('delete-class/<int:id>/', views.delete_class, name='delete-class'),
                   path('delete-all-class/', views.delete_all_class, name='delete-all-class'),
 
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

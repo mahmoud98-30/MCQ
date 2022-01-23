@@ -7,8 +7,8 @@ from django.utils.translation import gettext_lazy as _
 import matplotlib.pyplot as plt
 
 from paper.correction import chack_answer
-from paper.forms import paperForm
-from paper.models import Correct, Student
+from paper.forms import paperForm, CreateStudentForm, CreateTeacherForm, CreateClassForm
+from paper.models import Correct, Student, Teacher, Class
 from .resources import StudentResource
 
 
@@ -90,17 +90,31 @@ def delete_all_papers(request):
 
 @login_required(login_url='/login/')
 def new_student(request):
+    form = CreateStudentForm(request.POST or None)
+    if request.method == 'POST':
+        if form.is_valid():
+            form = form.save(commit=False)
+            form.save()
+            msg = _('done ')
+            messages.add_message(request, messages.SUCCESS, msg)
+        form = CreateStudentForm()
+    student = Student.objects.all()
+    return render(request, 'paper/student/new_student.html', {
+        'title': _('new student'),
+        'form': form,
+        'student': student,
+    })
+
+
+@login_required(login_url='/login/')
+def update_student(request, fk):
     pass
 
 
 @login_required(login_url='/login/')
-def update_student(request):
-    pass
-
-
-@login_required(login_url='/login/')
-def delete_student(request):
-    pass
+def delete_student(request, fk):
+    q = Correct.objects.filter(id=fk).delete()
+    return HttpResponseRedirect("/")
 
 
 @login_required(login_url='/login/')
@@ -110,7 +124,20 @@ def delete_all_students(request):
 
 @login_required(login_url='/login/')
 def new_teacher(request):
-    pass
+    form = CreateTeacherForm(request.POST or None)
+    if request.method == 'POST':
+        if form.is_valid():
+            form = form.save(commit=False)
+            form.save()
+            msg = _('done ')
+            messages.add_message(request, messages.SUCCESS, msg)
+        form = CreateTeacherForm()
+    teacher = Teacher.objects.all()
+    return render(request, 'paper/teacher/new_teacher.html', {
+        'title': _('new teacher'),
+        'form': form,
+        'teacher': teacher,
+    })
 
 
 @login_required(login_url='/login/')
@@ -130,7 +157,20 @@ def delete_all_teachers(request):
 
 @login_required(login_url='/login/')
 def new_class(request):
-    pass
+    form = CreateClassForm(request.POST or None)
+    if request.method == 'POST':
+        if form.is_valid():
+            form = form.save(commit=False)
+            form.save()
+            msg = _('done ')
+            messages.add_message(request, messages.SUCCESS, msg)
+        form = CreateClassForm()
+    class_room = Class.objects.all()
+    return render(request, 'paper/class/new_class.html', {
+        'title': _('new class'),
+        'form': form,
+        'class': class_room,
+    })
 
 
 @login_required(login_url='/login/')

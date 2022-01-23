@@ -23,6 +23,15 @@ class CreateStudentForm(forms.ModelForm):
         model = Student
         fields = ('name', 'code', 'class_room', 'teacher_name')
 
+    def clean_code(self):
+        """
+           Check the email if exists or not
+        """
+        cd = self.cleaned_data
+        if Student.objects.filter(code=cd['code']).exists():
+            raise forms.ValidationError(_("The code is already "))
+        return cd['code']
+
 
 class UpdateStudentForm(forms.ModelForm):
     class Meta:
