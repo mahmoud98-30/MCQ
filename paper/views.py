@@ -10,6 +10,8 @@ from paper.correction import chack_answer
 from paper.forms import paperForm, StudentForm, TeacherForm, ClassForm, UpdateStudentForm, UpdateTeacherForm, \
     UpdateClassForm
 from paper.models import Correct, Student, Teacher, Class
+from user.models import Profile
+from .generate_pdf import generate_pdf
 from .resources import StudentResource
 
 
@@ -92,6 +94,7 @@ def delete_all_papers(request):
 @login_required(login_url='/login/')
 def new_student(request):
     form = StudentForm(request.POST or None)
+    student = Student.objects.get(id=4)
     if request.method == 'POST':
         if form.is_valid():
             form = form.save(commit=False)
@@ -99,7 +102,15 @@ def new_student(request):
             msg = _('done ')
             messages.add_message(request, messages.SUCCESS, msg)
         form = StudentForm()
-    student = Student.objects.all()
+        # student = Student.objects.all()
+        # teacher = Teacher.objects.all()
+    school = Profile.objects.get(id=1)
+    # for student in student:
+    #     print(student.qr_code.path, school.image.path)
+    generate = generate_pdf(student.qr_code.path, school.image.path, student.name, school.school_name,
+                            student.class_room, student.teacher_name.name, student.teacher_name.subject, student.code)
+    return generate
+
     return render(request, 'paper/student/new_student.html', {
         'title': _('new student'),
         'form': form,
@@ -109,7 +120,6 @@ def new_student(request):
 
 @login_required(login_url='/login/')
 def update_student(request, fk):
-
     obj = get_object_or_404(Student, id=fk)
     form = UpdateStudentForm(request.POST or None, instance=obj)
 
@@ -155,7 +165,6 @@ def new_teacher(request):
 
 @login_required(login_url='/login/')
 def update_teacher(request, fk):
-
     obj = get_object_or_404(Student, id=fk)
     form = UpdateTeacherForm(request.POST or None, instance=obj)
 
@@ -201,7 +210,6 @@ def new_class(request):
 
 @login_required(login_url='/login/')
 def update_class(request, fk):
-
     obj = get_object_or_404(Student, id=fk)
     form = UpdateClassForm(request.POST or None, instance=obj)
 
@@ -225,4 +233,3 @@ def delete_class(request, fk):
 def delete_all_class(request):
     Class.objects.all()
     return HttpResponseRedirect("/")
-
