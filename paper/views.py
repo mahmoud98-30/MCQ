@@ -11,6 +11,7 @@ from paper.forms import paperForm, StudentForm, TeacherForm, ClassForm, UpdateSt
     UpdateClassForm
 from paper.models import Correct, Student, Teacher, Class
 from user.models import Profile
+from .filters import StudentFilter
 from .generate_pdf import generate_pdf
 from .resources import StudentResource
 
@@ -102,19 +103,38 @@ def new_student(request):
             msg = _('done ')
             messages.add_message(request, messages.SUCCESS, msg)
         form = StudentForm()
-        # student = Student.objects.all()
-        # teacher = Teacher.objects.all()
-    school = Profile.objects.get(id=1)
-    # for student in student:
-    #     print(student.qr_code.path, school.image.path)
-    generate = generate_pdf(student.qr_code.path, school.image.path, student.name, school.school_name,
-                            student.class_room, student.teacher_name.name, student.teacher_name.subject, student.code)
-    return generate
 
     return render(request, 'paper/student/new_student.html', {
         'title': _('new student'),
         'form': form,
         'student': student,
+    })
+
+
+@login_required(login_url='/login/')
+def generate_pdf(request):
+    student_list = Student.objects.all()
+    class_list = Class.objects.all()
+    # sessions = Teacher.objects.filter(course__id=c.id)  # First way, forward lookup.
+    print(class_list)
+
+    subject_list = Teacher.objects.values_list('subject')
+    print(subject_list)
+
+    # student_filter = StudentFilter(request.GET, queryset=student_list)
+
+    if request.method == 'POST':
+        school = Profile.objects.get(id=1)
+        student = Student.objects.get(id=4)
+        generate = generate_pdf(student.qr_code.path, school.image.path, student.name, school.school_name,
+                                student.class_room, student.teacher_name.name, student.teacher_name.subject, student.code)
+        return generate
+
+    return render(request, 'paper/student/generate_pdf.html', {
+        'title': _('generate pdf'),
+        'subject_list': subject_list,
+        'class_list': class_list,
+        'student_filter': student_list,
     })
 
 
