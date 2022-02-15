@@ -116,19 +116,24 @@ def generate_pdf(request):
     student_list = Student.objects.all()
     class_list = Class.objects.all()
     # sessions = Teacher.objects.filter(course__id=c.id)  # First way, forward lookup.
-    print(class_list)
+    # print(class_list)
 
-    subject_list = Teacher.objects.values_list('subject')
-    print(subject_list)
+    subject_list = Teacher.objects.values_list('subject', flat=True)
+    # print(subject_list)
 
     # student_filter = StudentFilter(request.GET, queryset=student_list)
 
     if request.method == 'POST':
-        school = Profile.objects.get(id=1)
-        student = Student.objects.get(id=4)
-        generate = generate_pdf(student.qr_code.path, school.image.path, student.name, school.school_name,
-                                student.class_room, student.teacher_name.name, student.teacher_name.subject, student.code)
-        return generate
+        class_q = request.POST.get('class_room')
+        subject_q = request.POST.get('subject')
+        print(class_q, subject_q)
+        student = Student.objects.filter(class_room__name=class_q, teacher_name__subject=subject_q)
+        print(student)
+        # school = Profile.objects.get(id=1)
+        # student = Student.objects.get(id=4)
+        # generate = generate_pdf(student.qr_code.path, school.image.path, student.name, school.school_name,
+        #                         student.class_room, student.teacher_name.name, student.teacher_name.subject, student.code)
+        # return generate
 
     return render(request, 'paper/student/generate_pdf.html', {
         'title': _('generate pdf'),

@@ -45,16 +45,17 @@
 {##}
 {#                              </div>#}
 {#                            </form>#}
-                            <form method="get" enctype='multipart/form-data'>
+                            <form method="post" enctype='multipart/form-data'>
                                 <legend class="border-bottom pb-1 mb-3 d-flex">{% trans "student table" %}</legend>
                                 {% csrf_token %}
                               <div class="form-row align-items-center">
                                 <div class="col-auto">
                                   <label for="exampleFormControlSelect1">{% trans "class" %}</label>
                                   <div class="input-group mb-2">
-                                    <select class="form-control" id="exampleFormControlSelect1">
+                                    <select class="form-control" id="class_room"name='class_room'>
+                                        <option disabled selected> -- {% trans "select an option" %} -- </option>
                                         {% for q in class_list %}
-                                        <option>{{ q }}</option>
+                                            <option   value="{{ q }}">{{ q }}</option>
                                         {% endfor %}
                                     </select>
                                   </div>
@@ -62,9 +63,10 @@
                                 <div class="col-auto">
                                   <label for="exampleFormControlSelect2">{% trans "subject" %}</label>
                                   <div class="input-group mb-2">
-                                    <select class="form-control" id="exampleFormControlSelect2">
+                                    <select class="form-control" id="subject" name='subject'>
+                                    <option disabled selected> -- {% trans "select an option" %} -- </option>
                                       {% for q in subject_list %}
-                                        <option>{{ q }}</option>
+                                        <option value="{{ q }}">{{ q }}</option>
                                         {% endfor %}
                                     </select>
                                   </div>
