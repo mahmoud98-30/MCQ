@@ -9,9 +9,10 @@ urlpatterns = [
                   path('paper-list/', views.paper_list, name='paper-list'),
                   path('import-student-data/', views.import_student_data, name='import-student-data'),
                   path('delete-papers/', views.delete_all_papers, name='delete-papers'),
-
                   path('new-student/', views.new_student, name='new-student'),
                   path('generate-pdf/', views.generate_pdf, name='generate-pdf'),
+
+
                   path('update-student/<int:fk>/', views.update_student, name='update-student'),
                   path('delete-student/<int:fk>/', views.delete_student, name='delete-student'),
                   path('delete-all-students/', views.delete_all_students, name='delete-all-students'),

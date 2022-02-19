@@ -33,19 +33,7 @@
                     <div class="row" class="form-group"  style="justify-content: center;">
                         <div class="border p-4 mb-5 " style="display: contents;">
 
-{#                            <form method="get" enctype='multipart/form-data'>#}
-{#                                <legend class="border-bottom pb-1 mb-3 d-flex">{% trans "student table" %}</legend>#}
-{#                              {% csrf_token %}#}
-{#                              <div class="form-group">#}
-{#                                  <div class="">#}
-{#                                      {{ student_filter.form.as_p }}#}
-{#                                  </div>#}
-{##}
-{#                                <input class="btn btn-primary d-flex check-answer" id="check-answer" type="submit" value="{% trans "search" %}">#}
-{##}
-{#                              </div>#}
-{#                            </form>#}
-                            <form method="post" enctype='multipart/form-data'>
+                            <form method="post"   enctype='multipart/form-data'>
                                 <legend class="border-bottom pb-1 mb-3 d-flex">{% trans "student table" %}</legend>
                                 {% csrf_token %}
                               <div class="form-row align-items-center">
@@ -54,6 +42,7 @@
                                   <div class="input-group mb-2">
                                     <select class="form-control" id="class_room"name='class_room'>
                                         <option disabled selected> -- {% trans "select an option" %} -- </option>
+                                        <option value="{% trans "ALL" %}">{% trans "ALL" %}</option>
                                         {% for q in class_list %}
                                             <option   value="{{ q }}">{{ q }}</option>
                                         {% endfor %}
@@ -65,6 +54,7 @@
                                   <div class="input-group mb-2">
                                     <select class="form-control" id="subject" name='subject'>
                                     <option disabled selected> -- {% trans "select an option" %} -- </option>
+                                    <option value="{% trans "ALL" %}">{% trans "ALL" %}</option>
                                       {% for q in subject_list %}
                                         <option value="{{ q }}">{{ q }}</option>
                                         {% endfor %}
@@ -72,7 +62,7 @@
                                   </div>
                                 </div>
                                 <div class="col-auto">
-                                <input class="btn btn-primary d-flex check-answer" id="check-answer" type="submit" value="{% trans "search" %}">
+                                <input class="btn btn-primary d-flex check-answer" name="filter" id="filter" type="submit" value="{% trans "search" %}">
                                 </div>
                               </div>
                             </form>
@@ -81,9 +71,13 @@
                     </div>
 
                     <!-- DataTales  -->
-                    <div class="card shadow mb-4">
+                    <form method="post"  enctype='multipart/form-data'>
+                        {% csrf_token %}
+                        <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">{% trans "generate student" %}</h6>
+                             <h6 class="m-0 font-weight-bold text-primary">{% trans "generate student" %}</h6>
+
+                             <input class="btn btn-primary d-flex check-answer" name="tales" id="tales"  type="submit" value="{% trans "generate" %}">
                         </div>
                          <ul>
                           </ul>
@@ -100,6 +94,10 @@
                                     <tbody>
                                     {% for data in student_filter %}
                                         <tr>
+
+                                            <input id="class_t" name="class_t" type="hidden" value="{{ data.class_room }}">
+                                            <input id="subject_t" name="subject_t" type="hidden" value="{{ data.teacher_name.subject }}">
+
                                             <td>{{ data.name }}</td>
                                             <td>{{ data.class_room }}</td>
                                             <td>{{ data.teacher_name.subject }}</td>
@@ -110,7 +108,7 @@
                             </div>
                         </div>
                     </div>
-
+                    </form>
      </div>
 
 

@@ -95,7 +95,7 @@ def delete_all_papers(request):
 @login_required(login_url='/login/')
 def new_student(request):
     form = StudentForm(request.POST or None)
-    student = Student.objects.get(id=4)
+    student = Student.objects.all()
     if request.method == 'POST':
         if form.is_valid():
             form = form.save(commit=False)
@@ -113,33 +113,54 @@ def new_student(request):
 
 @login_required(login_url='/login/')
 def generate_pdf(request):
-    student_list = Student.objects.all()
+    student_filter = Student.objects.all()
     class_list = Class.objects.all()
-    # sessions = Teacher.objects.filter(course__id=c.id)  # First way, forward lookup.
     # print(class_list)
 
     subject_list = Teacher.objects.values_list('subject', flat=True)
     # print(subject_list)
+    global class_q
+    global subject_q
 
-    # student_filter = StudentFilter(request.GET, queryset=student_list)
+    class_q = request.POST.get('class_room')
+    subject_q = request.POST.get('subject')
 
-    if request.method == 'POST':
-        class_q = request.POST.get('class_room')
-        subject_q = request.POST.get('subject')
-        print(class_q, subject_q)
-        student = Student.objects.filter(class_room__name=class_q, teacher_name__subject=subject_q)
-        print(student)
-        # school = Profile.objects.get(id=1)
-        # student = Student.objects.get(id=4)
-        # generate = generate_pdf(student.qr_code.path, school.image.path, student.name, school.school_name,
-        #                         student.class_room, student.teacher_name.name, student.teacher_name.subject, student.code)
-        # return generate
+    if request.method == 'POST' and "filter" in request.POST:
+        # print(request.POST)
+        # print(type(class_q), type(subject_q))
+        if class_q == subject_q == "ALL":
+            student_filter = Student.objects.all()
+            # print(student_filter)
+        else:
+            student_filter = Student.objects.filter(class_room__name=class_q, teacher_name__subject=subject_q)
+            # print(student_filter)
+        return render(request, 'paper/student/generate_pdf.html', {
+            'title': _('generate pdf'),
+            'subject_list': subject_list,
+            'class_list': class_list,
+            'student_filter': student_filter,
+            'class_q': class_q,
+            'subject_q': subject_q,
+        })
+    if request.method == 'POST' and "tales" in request.POST:
+        class_t = request.POST.get('class_t')
+        subject_t = request.POST.get('subject_t')
+        if class_t is None or subject_t is None:
+            msg = _('Enter value in select fields ')
+            messages.add_message(request, messages.ERROR, msg)
+        else:
+            student_filter = Student.objects.filter(class_room__name=class_t, teacher_name__subject=subject_t)
+            print(student_filter)
+
+        return HttpResponseRedirect("/generate-pdf/")
 
     return render(request, 'paper/student/generate_pdf.html', {
         'title': _('generate pdf'),
         'subject_list': subject_list,
         'class_list': class_list,
-        'student_filter': student_list,
+        'student_filter': student_filter,
+        'class_q': class_q,
+        'subject_q': subject_q,
     })
 
 
