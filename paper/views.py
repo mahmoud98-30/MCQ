@@ -12,7 +12,7 @@ from paper.forms import paperForm, StudentForm, TeacherForm, ClassForm, UpdateSt
 from paper.models import Correct, Student, Teacher, Class
 from user.models import Profile
 from .filters import StudentFilter
-from .generate_pdf import generate_pdf
+from .generate_pdf import generate
 from .resources import StudentResource
 
 
@@ -115,6 +115,8 @@ def new_student(request):
 def generate_pdf(request):
     student_filter = Student.objects.all()
     class_list = Class.objects.all()
+    # print(request.user.id)
+    school_profil = Profile.objects.get(user_id=request.user.id)
     # print(class_list)
 
     subject_list = Teacher.objects.values_list('subject', flat=True)
@@ -133,7 +135,7 @@ def generate_pdf(request):
             # print(student_filter)
         else:
             student_filter = Student.objects.filter(class_room__name=class_q, teacher_name__subject=subject_q)
-            # print(student_filter)
+
         return render(request, 'paper/student/generate_pdf.html', {
             'title': _('generate pdf'),
             'subject_list': subject_list,
@@ -150,9 +152,16 @@ def generate_pdf(request):
             messages.add_message(request, messages.ERROR, msg)
         else:
             student_filter = Student.objects.filter(class_room__name=class_t, teacher_name__subject=subject_t)
-            print(student_filter)
+            # print(student_filter)
+            generate_paper = generate(student_filter, school_profil,)
 
-        return HttpResponseRedirect("/generate-pdf/")
+            # for student_data in student_filter:
+            #
+            #     generate_paper = generate(student_data.qr_code.path, school_profil.image.path, student_filter,
+            #     school_profil.school_name, student_data.class_room.name, student_data.teacher_name.name,
+            #     student_data.teacher_name.subject, student_data.code)
+
+        return generate_paper
 
     return render(request, 'paper/student/generate_pdf.html', {
         'title': _('generate pdf'),
