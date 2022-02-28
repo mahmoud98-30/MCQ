@@ -4,12 +4,12 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from tablib import Dataset
 from django.utils.translation import gettext_lazy as _
-import matplotlib.pyplot as plt
+from django.views.generic.edit import FormView
 
 from paper.correction import chack_answer
-from paper.forms import paperForm, StudentForm, TeacherForm, ClassForm, UpdateStudentForm, UpdateTeacherForm, \
+from paper.forms import CorrectForm, CorrectionForm, StudentForm, TeacherForm, ClassForm, UpdateStudentForm, UpdateTeacherForm, \
     UpdateClassForm
-from paper.models import Correct, Student, Teacher, Class
+from paper.models import Correct, Student, Teacher, Class, Correction
 from user.models import Profile
 from .filters import StudentFilter
 from .generate_pdf import generate
@@ -18,25 +18,32 @@ from .resources import StudentResource
 
 @login_required(login_url='/login/')
 def home(request):
+    correct_form = CorrectForm(request.POST, request.FILES or None)
+    correction_form = CorrectionForm(request.POST, request.FILES or None)
     if request.method == 'POST':
-        form = paperForm(request.POST, request.FILES or None)
-        if form.is_valid():
-            form = form.save(commit=False)
-            form.save()
+        if correct_form.is_valid and correction_form.is_valid:
+
+            correct_form = correct_form.save(commit=False)
+            correct_form.save()
+
+            title = request.POST.get('title')
+            images = request.FILES.getlist('answer_image')
+            for img in images:
+                value = Correction(
+                    title=title,
+                    answer_image=img,
+                    correct_image_id=correct_form.id,
+                )
+                value.save()
 
             # get last data
-            q = Correct.objects.latest('creat_at')
+            correct_paper = Correct.objects.latest('creat_at')
+            answer_img = Correction.objects.filter(correct_image_id=correct_form.id)
 
-            # convert image to array
-            try:
-                c_img_arr = plt.imread(q.correct_image.path)
-                s_img_arr = plt.imread(q.answer_image.path)
-            except:
-                c_img_arr = plt.imread(q.correct_image.path)
-                s_img_arr = plt.imread(q.answer_image.path)
+            correct_img = correct_paper.correct_image.path
 
             # function of correction
-            correction = chack_answer(request, c_img_arr, s_img_arr)
+            correction = chack_answer(request, correct_img, answer_img)
 
             msg = _(
                 'Congratulations, your correction has been successful.')
@@ -44,8 +51,29 @@ def home(request):
             return correction
     return render(request, 'paper/index.html', {
         'title': _('home'),
+        'correct_form': correct_form,
+        'correction_form': correction_form,
     }, )
 
+# @login_required(login_url='/login/')
+# class HomeView(FormView):
+#     form_class = CorrectionForm, CorrectForm
+#     template_name = 'paper/index.html'  # Replace with your template.
+#     success_url = '/'  # Replace with your URL or reverse().
+#
+#     def post(self, request, *args, **kwargs):
+#         form_class = self.get_form_class()
+#         form = self.get_form(form_class)
+#         files = request.FILES.getlist('answer_image')
+#         if form.is_valid():
+#             for f in files:
+#                 print(f)
+#                 # value = Student()
+#
+#             return self.form_valid(form)
+#         else:
+#             return self.form_invalid(form)
+#
 
 @login_required(login_url='/login/')
 def paper_list(request):

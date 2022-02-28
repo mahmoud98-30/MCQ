@@ -1,19 +1,26 @@
 from django import forms
 from django.utils.translation import ugettext_lazy as _
 
-from paper.models import Correct, Student, Teacher, Class
+from paper.models import Correct, Student, Teacher, Class, Correction
 
 
-class paperForm(forms.ModelForm):
-    title = forms.CharField()
+class CorrectForm(forms.ModelForm):
     correct_image = forms.ImageField()
-    answer_image = forms.ImageField()
 
     class Meta:
-        labels = {'title': _('title'), 'correct_image': _('correct_image'),
-                  'answer_image': _('answer_image'), }
+        labels = {'correct_image': _('correct_image'), }
         model = Correct
-        fields = ('title', 'correct_image', 'answer_image')
+        fields = ('correct_image',)
+
+
+class CorrectionForm(forms.ModelForm):
+    title = forms.CharField(max_length=225)
+    answer_image = forms.FileField(widget=forms.ClearableFileInput(attrs={'multiple': True}))
+
+    class Meta:
+        labels = {'title': _('title'), 'answer_image': _('answer_image'), }
+        model = Correction
+        fields = ('title', 'answer_image',)
 
 
 class StudentForm(forms.ModelForm):
