@@ -1,10 +1,5 @@
-import io
-from django.http import HttpResponse
 import cv2
 import numpy as np
-import xlsxwriter
-from django.utils.translation import gettext_lazy as _
-import qrcode
 
 
 # TO STACK ALL THE IMAGES IN ONE WINDOW
@@ -163,99 +158,5 @@ def showAnswers(img, myIndex, grading, ans, questions=5, choices=4):
     #                20, myColor, cv2.FILLED)
 
 
-def ExportExcel(TotelGRADING, TotelScore, PercentScore, CorrectAns, StudentAns):
-    # Create an in-memory output file for the new workbook.
-    output = io.BytesIO()
-
-    # creat exile file
-    workbook = xlsxwriter.Workbook(output)
-    sheet = workbook.add_worksheet()
-
-    # data
-    print('##################################')
-    print("TOTEL CORRECTION", TotelGRADING)
-    print("TOTEL SCORE", TotelScore)
-    print("Finel SCORE", PercentScore)
-    print("Correct Answer", CorrectAns)
-    print("Student Answer", StudentAns)
-    print('##################################')
-
-    # Header
-    student_name = "Student Name"
-    No_que = "Number Of Question"
-    result = "Result"
-    stu_answer = "Student Answer"
-    corr_ans = "Correct Answer"
-    result_percent = "Result By Percent"
-
-    sheet.write("A1", "اسم الطالب")
-    sheet.write("A2", "رقم السؤال")
-    sheet.write("A3", "الناتج")
-    sheet.write("A4", "الإجابه الطالب")
-    sheet.write("A5", "الإجابه الصحيحه")
-    sheet.write("A7", "نسبة النتيجة")
-
-    que_num = []
-    for num in range(1, 101):
-        que_num.append(num)
-
-    correct = "Correct"
-    wrong = "Wrong"
-    GRADING = []
-    for gra in TotelGRADING:
-        if gra == 0:
-            GRADING.append("خطأ")
-        else:
-            GRADING.append("صحيح")
-    # print(GRADING)
-
-    Correct = []
-    for cor in CorrectAns:
-        if cor == 0:
-            Correct.append("A")
-        elif cor == 1:
-            Correct.append("B")
-        elif cor == 2:
-            Correct.append("C")
-        else:
-            Correct.append("D")
-    # print(Correct)
-
-    Student = []
-    for stu in StudentAns:
-        if stu == 0:
-            Student.append("A")
-        elif stu == 1:
-            Student.append("B")
-        elif stu == 2:
-            Student.append("C")
-        else:
-            Student.append("D")
-    # print(Student)
-
-    # write data in file
-    for item in range(len(que_num)):
-        sheet.write(1, item + 1, que_num[item])
-        sheet.write(2, item + 1, GRADING[item])
-        sheet.write(3, item + 1, Student[item])
-        sheet.write(4, item + 1, Correct[item])
-
-    sheet.write("A8", PercentScore)
-
-    # Close the workbook before sending the data.
-    workbook.close()
-
-    # Rewind the buffer.
-    output.seek(0)
-
-    # Set up the Http response.
-    filename = 'Result.xlsx'
-    response = HttpResponse(
-        output,
-        content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
-    )
-    response['Content-Disposition'] = 'attachment; filename=%s' % filename
-
-    return response
 
 

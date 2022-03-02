@@ -6,11 +6,13 @@ from tablib import Dataset
 from django.utils.translation import gettext_lazy as _
 from django.views.generic.edit import FormView
 
-from paper.correction import chack_answer
 from paper.forms import CorrectForm, CorrectionForm, StudentForm, TeacherForm, ClassForm, UpdateStudentForm, UpdateTeacherForm, \
     UpdateClassForm
 from paper.models import Correct, Student, Teacher, Class, Correction
 from user.models import Profile
+from .correction.answer_paper import answer_paper
+from .correction.correct_paper import correct_paper
+from .correction.finel_score import finel_correction
 from .filters import StudentFilter
 from .generate_pdf import generate
 from .resources import StudentResource
@@ -37,18 +39,23 @@ def home(request):
                 value.save()
 
             # get last data
-            correct_paper = Correct.objects.latest('creat_at')
+            latest_correct_paper = Correct.objects.latest('creat_at')
             answer_img = Correction.objects.filter(correct_image_id=correct_form.id)
 
-            correct_img = correct_paper.correct_image.path
+            correct_img = latest_correct_paper.correct_image.path
 
             # function of correction
-            correction = chack_answer(request, correct_img, answer_img)
+            # CorrectIndex, CorrectAnslist = correct_paper(request, correct_img)
+            # StudentIndex, StudentAnslist = answer_paper(request, answer_img)
+            # print(StudentIndex, len(StudentIndex))
+            # print(StudentAnslist, len(StudentAnslist))
+            answer_paper(request, answer_img)
+            # correction = finel_correction(CorrectIndex, CorrectAnslist, StudentIndex, StudentAnslist)
 
             msg = _(
                 'Congratulations, your correction has been successful.')
             messages.add_message(request, messages.SUCCESS, msg)
-            return correction
+            return HttpResponseRedirect("/")
     return render(request, 'paper/index.html', {
         'title': _('home'),
         'correct_form': correct_form,
