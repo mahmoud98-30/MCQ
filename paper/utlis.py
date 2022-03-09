@@ -84,7 +84,7 @@ def rectContour(contours):
     rectCon = sorted(rectCon, key=lambda ctr: cv2.boundingRect(ctr)[0] + cv2.boundingRect(ctr)[1] * 3)
     # print(rectCon)
     # print('-----------------------------------------------------')
-    print(len(rectCon))
+    # print(len(rectCon))
     return rectCon
 
 

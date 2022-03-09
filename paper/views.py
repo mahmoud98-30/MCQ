@@ -13,6 +13,7 @@ from user.models import Profile
 from .correction.answer_paper import answer_paper
 from .correction.correct_paper import correct_paper
 from .correction.finel_score import finel_correction
+from .correction1 import chack_answer
 from .filters import StudentFilter
 from .generate_pdf import generate
 from .resources import StudentResource
@@ -38,19 +39,17 @@ def home(request):
                 )
                 value.save()
 
-            # get last data
+            # get data
             latest_correct_paper = Correct.objects.latest('creat_at')
             answer_img = Correction.objects.filter(correct_image_id=correct_form.id)
-
             correct_img = latest_correct_paper.correct_image.path
 
             # function of correction
-            # CorrectIndex, CorrectAnslist = correct_paper(request, correct_img)
-            # StudentIndex, StudentAnslist = answer_paper(request, answer_img)
-            # print(StudentIndex, len(StudentIndex))
-            # print(StudentAnslist, len(StudentAnslist))
-            answer_paper(request, answer_img)
-            # correction = finel_correction(CorrectIndex, CorrectAnslist, StudentIndex, StudentAnslist)
+            CorrectAnslist = correct_paper(request, correct_img)
+            StudentAnslist = answer_paper(request, answer_img)
+            # print('CorrectAnslist', CorrectAnslist)
+            # print('StudentAnslist', StudentAnslist)
+            correction = finel_correction(CorrectAnslist, StudentAnslist)
 
             msg = _(
                 'Congratulations, your correction has been successful.')
@@ -62,25 +61,6 @@ def home(request):
         'correction_form': correction_form,
     }, )
 
-# @login_required(login_url='/login/')
-# class HomeView(FormView):
-#     form_class = CorrectionForm, CorrectForm
-#     template_name = 'paper/index.html'  # Replace with your template.
-#     success_url = '/'  # Replace with your URL or reverse().
-#
-#     def post(self, request, *args, **kwargs):
-#         form_class = self.get_form_class()
-#         form = self.get_form(form_class)
-#         files = request.FILES.getlist('answer_image')
-#         if form.is_valid():
-#             for f in files:
-#                 print(f)
-#                 # value = Student()
-#
-#             return self.form_valid(form)
-#         else:
-#             return self.form_invalid(form)
-#
 
 @login_required(login_url='/login/')
 def paper_list(request):
@@ -123,7 +103,8 @@ def import_student_data(request):
 @login_required(login_url='/login/')
 def delete_all_papers(request):
     # delete all data
-    q = Correct.objects.all().delete()
+    delete_Correction = Correction.objects.all().delete()
+    delete_Correct = Correct.objects.all().delete()
     return HttpResponseRedirect("/")
 
 

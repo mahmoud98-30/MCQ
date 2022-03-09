@@ -11,7 +11,7 @@ from paper.correction.parameters import rect_num, CorrectScore, questions, choic
 def correct_paper(request, CorrectAnswerpaper):
     # convert image to array
     c_arr = plt.imread(CorrectAnswerpaper)
-    print(c_arr)
+    # print(c_arr)
 
     # Correct Answer paper
     Cimg = cv2.resize(c_arr, (widthImg, heightImg))  # RESIZE IMAGE
@@ -28,7 +28,7 @@ def correct_paper(request, CorrectAnswerpaper):
 
     CRecNum = len(CrectCon)  # number of rectangles
 
-    print("Numpy Of Correct Answer Rectangles:", CRecNum)
+    # print("Numpy Of Correct Answer Rectangles:", CRecNum)
 
     if CRecNum == rect_num:
         CorrectAnslist = []
@@ -54,8 +54,7 @@ def correct_paper(request, CorrectAnswerpaper):
 
             Cboxes = utlis.splitBoxes(CimgThresh)  # GET INDIVIDUAL BOXES
             # # print(cv2.countNonZero(Cboxes[1]), cv2.countNonZero(Cboxes[2]), cv2.countNonZero(Cboxes[3]),
-            # cv2.countNonZero(Cboxes[4]), ) # print(cv2.countNonZero(Sboxes[1]), cv2.countNonZero(Sboxes[2]),
-            # cv2.countNonZero(Sboxes[3]),cv2.countNonZero(Sboxes[4]), )
+
             CcountR = 0
             CcountC = 0
             CorrectPixelVal = np.zeros((questions, choices))  # TO STORE THE NON ZERO VALUES OF EACH BOX
@@ -82,12 +81,12 @@ def correct_paper(request, CorrectAnswerpaper):
                 CorrectIndexVal = np.where(CorrectArr == np.amax(CorrectArr))
                 # print(CorrectIndexVal[0])
                 CorrectIndex.append(CorrectIndexVal[0][0])
-            print('----------------------------------------')
-            print("Correct Answers", CorrectIndex)
-            print('----------------------------------------')
+            # print('----------------------------------------')
+            # print("Correct Answers", CorrectIndex)
+            # print('----------------------------------------')
             CorrectAnslist.append(CorrectIndex)
-
-
+        # print("CorrectAnslist", CorrectAnslist)
+        return CorrectAnslist
 
         #  # DISPLAYING ANSWERS
         #  CResultImg = CimgWarpColored.copy()
@@ -112,9 +111,9 @@ def correct_paper(request, CorrectAnswerpaper):
         # cv2.imshow("Result", stackedImage)
         # cv2.waitKey(0)
 
-        return CorrectIndex, CorrectAnslist
-
     else:
         msg = _(
             'The Scan Of Correct Answer Paper Is Bad.')
         messages.add_message(request, messages.WARNING, msg)
+
+
