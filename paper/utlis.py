@@ -1,6 +1,8 @@
 import cv2
 import numpy as np
 
+from paper.correction.parameters import questions, choices
+
 
 # TO STACK ALL THE IMAGES IN ONE WINDOW
 def stackImages(imgArray, scale, lables=[]):
@@ -132,7 +134,7 @@ def drawGrid(img, questions=5, choices=5):
     return img
 
 
-def showAnswers(img, myIndex, grading, ans, questions=5, choices=4):
+def showAnswers(img, myIndex, grading, ans, questions=questions, choices=choices):
     secW = int(img.shape[1] / questions)
     secH = int(img.shape[0] / choices)
 

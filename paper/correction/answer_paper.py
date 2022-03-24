@@ -101,30 +101,6 @@ def answer_paper(request, StudentAnswerpaper):
                 # print("Student Answers", StudentAnslist)
                 # print("Student Answers", len(StudentAnslist))
 
-
-
-    #     #  # DISPLAYING ANSWERS
-    #     #  CResultImg = CimgWarpColored.copy()
-    #     #  CResultImg = utlis.showAnswers(CResultImg, CorrectIndex, grading, ans)  # DRAW DETECTED ANSWERS
-    #     #  utlis.drawGrid(CimgWarpColored)  # DRAW GRID
-    #     #
-    #     # # DISPLAYING ANSWERS
-    #     #  SResultImg = SimgWarpColored.copy()
-    #     #  SResultImg = utlis.showAnswers(SResultImg, StudentIndex, grading, ans)  # DRAW DETECTED ANSWERS
-    #     #  utlis.drawGrid(SimgWarpColored)  # DRAW GRID
-    #
-    #     # imgRawDrawings = np.zeros_like(imgWarpColored)  # NEW BLANK IMAGE WITH WARP IMAGE SIZE
-    #     # utlis.showAnswers(imgRawDrawings, myIndex, grading, ans)  # DRAW ON NEW IMAGE
-    #     # invMatrix = cv2.getPerspectiveTransform(pts2, pts1)  # INVERSE TRANSFORMATION MATRIX
-    #     # imgInvWarp = cv2.warpPerspective(imgRawDrawings, invMatrix, (widthImg, heightImg))  # INV IMAGE WARP
-    #
-    #     # blankImg = np.zeros_like(Cimg)
-    #     # imageArray = ([CimgBigContour, SimgBigContour, CimgThresh, SimgCanny, ],
-    #     #               [blankImg, SimgThresh, blankImg, blankImg, ]
-    #     #               )
-    #     # stackedImage = utlis.stackImages(imageArray, 0.5)
-    #     # cv2.imshow("Result", stackedImage)
-    #     # cv2.waitKey(0)
         else:
             msg = _(
                 'The Scan Of Student Answer Paper Is Bad.')
