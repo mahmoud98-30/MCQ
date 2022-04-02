@@ -1,8 +1,9 @@
 from random import random, randrange, getrandbits, randint
+
+import qrcode
 from django.db import models
 from django.utils.safestring import mark_safe
 from django.utils.translation import gettext_lazy as _
-import qrcode
 from PIL import Image, ImageDraw
 from io import BytesIO
 from django.core.files import File
@@ -115,7 +116,7 @@ class Student(models.Model):
     code = models.CharField(max_length=225)
     class_room = models.ForeignKey(Class, on_delete=models.CASCADE, blank=True, null=True, )
     teacher_name = models.ForeignKey(Teacher, on_delete=models.CASCADE, blank=True, null=True, )
-    qr_code = models.ImageField(blank=True, upload_to='QR-code/', default='qrcode.png')
+    qr_code = models.ImageField(blank=True, upload_to='QR/', default='qrcode.png')
 
     class Meta:
         verbose_name = _('Student')

@@ -81,6 +81,7 @@ def correct_paper(request, CorrectAnswerpaper):
                 CorrectIndexVal = np.where(CorrectArr == np.amax(CorrectArr))
                 # print(CorrectIndexVal[0])
                 CorrectIndex.append(CorrectIndexVal[0][0])
+            # print('CorrectPixelVal', CorrectPixelVal)
             # print('----------------------------------------')
             # print("Correct Answers", CorrectIndex)
             # print('----------------------------------------')

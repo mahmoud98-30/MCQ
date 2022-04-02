@@ -49,6 +49,7 @@ def home(request):
             StudentAnslist = answer_paper(request, answer_img)
             # print('CorrectAnslist', CorrectAnslist)
             # print('StudentAnslist', StudentAnslist)
+
             correction = finel_correction(CorrectAnslist, StudentAnslist)
 
             msg = _(

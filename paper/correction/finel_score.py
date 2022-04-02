@@ -1,51 +1,50 @@
 import paper.utlis as utlis
 from paper.correction.excel import ExportExcel
-from paper.correction.parameters import questions, CorrectScore
+from paper.correction.parameters import questions, CorrectScore, rect_num
 
 
-def finel_correction(CorrectAnslist, StudentAnslist, ):
+def finel_correction(CorrectAnslist, StudentAnslist):
+    # print("CorrectAnslist", CorrectAnslist)
+    # print("StudentAnslist", StudentAnslist)
+    # print("NUM StudentAnslist", len(StudentAnslist))
+    # print("-" * 100)
+    num_of_students_paper = len(StudentAnslist)
+
     # COMPARE THE VALUES TO FIND THE CORRECT ANSWERS
-    CorrectAns = [item for sublist in CorrectAnslist for item in sublist]
+    # CorrectAns = [item for sublist in CorrectAnslist for item in sublist]
     # StudentAns = [item for sublist in StudentAnslist for item in sublist for item2 in item ]
     StudentAns = []
-    for sublist in StudentAnslist:
-        for item in sublist:
-            for item2 in item:
-                StudentAns.append(item2)
-    print(CorrectAns)
-    print(StudentAns)
-    # TotelScore = []
-    # GRADINGLIST = []
-    # grading = []
-    # student_paper_num = len(StudentAnslist)
-    # for i in range(0, student_paper_num):
-    #     # print('c',CorrectAnslist)
-    #     s = StudentAnslist[i]
-    #     # print('s',StudentAnslist[i])
-    #     # print('--------------')
-    #     for x in range(0, questions):
-    #         # print('c', CorrectAnslist[x])
-    #         # print('sx', s[i])
-    #         for x in range(0, questions):
-    #             print('c', CorrectAnslist[x])
-    #             print('sx', s[i])
-    #             if s[i] == CorrectAnslist[x]:
-    #                 grading.append(1)
-    #             else:
-    #                 grading.append(0)
-    #
-    # print("GRADING", grading)
-        # GRADINGLIST.append(grading)
-        # print(grading[0:10])
-        # print(grading[10:20])
-        # print(grading[20:30])
+    TotelScore = []
+    for i in range(0, num_of_students_paper):
+        c1 = CorrectAnslist
+        s1 = StudentAnslist[i]
+        # print("CorrectAnslist", c1)
+        # print("StudentAnslist", s1)
+        # print("-"*100)
+        print("-" * 100)
+        for j in range(0, rect_num):
+            c2 = c1[j]
+            s2 = s1[j]
+            # print("c", c2)
+            # print("s", s2)
+            # print("-" * 100)
+            grading = []
+            for k in range(0, questions):
+                if s2[k] == c2[k]:
+                    grading.append(1)
+                else:
+                    grading.append(0)
+                # print("c", c2[k], "s", s2[k])
+                # print("-" * 100)
+            print("GRADING ", grading)
+            score = (sum(grading) / questions) * 100  # FINAL GRADE
+            TotelScore.append(score)
+            print("SCORE", score)
 
-    # grading_num = len(grading)
-    # for x in range(0, grading_num, 10):
-    #     print(grading[x:x + 10])
-    #     score = (sum(grading[x:x + 10]) / questions) * 100  # FINAL GRADE
-    #     TotelScore.append(score)
-    #     print("SCORE", score)
+        PercentScore = (sum(TotelScore) / CorrectScore) * 100
+        print("Finel SCORE", PercentScore, "%")
+
+
 
     # # DISPLAYING CORRACT
     # CResultImg = CimgWarpColored.copy()

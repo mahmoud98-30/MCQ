@@ -91,6 +91,8 @@ def answer_paper(request, StudentAnswerpaper):
                     # print(StudentIndexVal[0])
                     StudentIndex.append(StudentIndexVal[0][0])
 
+                # print('StudentPixelVal', StudentPixelVal)
+
                 # print('----------------------------------------')
                 # print("Student Answers", StudentIndex)
                 # print('----------------------------------------')
