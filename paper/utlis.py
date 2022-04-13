@@ -130,35 +130,43 @@ def drawGrid(img, questions=5, choices=5):
         pt4 = (secW * i, img.shape[0])
         cv2.line(img, pt1, pt2, (255, 255, 0), 2)
         cv2.line(img, pt3, pt4, (255, 255, 0), 2)
-
+    fimg = cv2.resize(img, (500, 500))
+    cv2.imshow("Result", fimg)
+    cv2.waitKey(0)
     return img
 
 
 def showAnswers(img, myIndex, grading, ans, questions=questions, choices=choices):
-    secW = int(img.shape[1] / questions)
-    secH = int(img.shape[0] / choices)
-
+    secW = int(img.shape[1] / choices)
+    secH = int(img.shape[0] / questions)
+    # print("myIndex", myIndex)
+    # print("ans", ans)
+    # print("grading", grading)
     for x in range(0, questions):
         myAns = myIndex[x]
         cX = (myAns * secW) + secW // 2
         cY = (x * secH) + secH // 2
-        cv2.circle(img, (cX, cY), 20, (0, 255, 0), cv2.FILLED)
-    return img
-    # if grading[x] == 1:
-    #     myColor = (0, 255, 0)
-    #     # cv2.rectangle(img,(myAns*secW,x*secH),((myAns*secW)+secW,(x*secH)+secH),myColor,cv2.FILLED)
-    #     cv2.circle(img, (cX, cY), 50, myColor, cv2.FILLED)
-    # else:
-    #     myColor = (0, 0, 255)
-    #     # cv2.rectangle(img, (myAns * secW, x * secH), ((myAns * secW) + secW, (x * secH) + secH), myColor, cv2.FILLED)
-    #     cv2.circle(img, (cX, cY), 50, myColor, cv2.FILLED)
+        # print("-" * 100)
+        # print("cX", cX)
+        # print("cY", cY)
+        cv2.circle(img, (cX, cY), 50, (0, 255, 0), cv2.FILLED)  # just show corrct answer
+    if grading[x] == 1:
+        GreenColor = (0, 255, 0)
+        # cv2.rectangle(img,(myAns*secW,x*secH),((myAns*secW)+secW,(x*secH)+secH),myColor,cv2.FILLED)
+        cv2.circle(img, (cX, cY), 50, GreenColor, cv2.FILLED)
+    else:
+        RedColor = (0, 0, 255)
+        # cv2.rectangle(img, (myAns * secW, x * secH), ((myAns * secW) + secW, (x * secH) + secH), myColor, cv2.FILLED)
+        cv2.circle(img, (cX, cY), 50, RedColor, cv2.FILLED)
     #
-    #     # CORRECT ANSWER
-    #     myColor = (0, 255, 0)
-    #     correctAns = ans[x]
-    #     cv2.circle(img, ((correctAns * secW) + secW // 2, (x * secH) + secH // 2),
-    #                20, myColor, cv2.FILLED)
+        # CORRECT ANSWER
+        # myColor = (0, 255, 0)
+        # correctAns = ans[x]
+        # cv2.circle(img, ((correctAns * secW) + secW // 2, (x * secH) + secH // 2),
+        #            20, myColor, cv2.FILLED)
 
+    # fimg = cv2.resize(img, (500, 500))
+    # cv2.imshow("showAnswers Result", fimg)
+    # cv2.waitKey(0)
 
-
-
+    return img

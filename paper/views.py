@@ -46,11 +46,11 @@ def home(request):
 
             # function of correction
             CorrectAnslist = correct_paper(request, correct_img)
-            StudentAnslist = answer_paper(request, answer_img)
+            StudentAnslist, SimgWarpColored, Simg, pts1, pts2 = answer_paper(request, answer_img)
             # print('CorrectAnslist', CorrectAnslist)
             # print('StudentAnslist', StudentAnslist)
 
-            correction = finel_correction(CorrectAnslist, StudentAnslist)
+            correction = finel_correction(CorrectAnslist, StudentAnslist, SimgWarpColored, Simg, pts1, pts2)
 
             msg = _(
                 'Congratulations, your correction has been successful.')
