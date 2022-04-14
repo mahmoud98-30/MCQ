@@ -55,7 +55,7 @@ def home(request):
             msg = _(
                 'Congratulations, your correction has been successful.')
             messages.add_message(request, messages.SUCCESS, msg)
-            return HttpResponseRedirect("/")
+            return correction
     return render(request, 'paper/index.html', {
         'title': _('home'),
         'correct_form': correct_form,

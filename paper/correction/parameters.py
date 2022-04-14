@@ -5,3 +5,5 @@ CorrectScore = 1000
 questions = 10
 choices = 4
 rect_num = 10
+correct = "Correct"
+wrong = "Wrong"

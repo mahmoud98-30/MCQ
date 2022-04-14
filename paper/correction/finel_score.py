@@ -16,14 +16,13 @@ def finel_correction(CorrectAnslist, StudentAnslist, SimgWarpColored, Simg, pts1
     # COMPARE THE VALUES TO FIND THE CORRECT ANSWERS
     TotelScore = []
     FinelScore = []
-
+    GRADINGLIST = []
     for i in range(0, num_of_students_paper):
         c1 = CorrectAnslist
         s1 = StudentAnslist[i]
         # print("CorrectAnslist", c1)
         # print("StudentAnslist", s1)
         # print("-"*100)
-        GRADINGLIST = []
         GRADING = []
         for j in range(0, rect_num):
             c2 = c1[j]
@@ -60,12 +59,13 @@ def finel_correction(CorrectAnslist, StudentAnslist, SimgWarpColored, Simg, pts1
             TotelScore.append(score)
             # print("SCORE", score)
 
-        print("GRADING ", GRADING)
+        # print("GRADING ", GRADING)
         GRADINGLIST.append(GRADING)
         PercentScore = (sum(TotelScore) / CorrectScore) * 100
 
         FinelScore.append(PercentScore)
-
+    # print("GRADINGLIST ", GRADINGLIST)
+    # print(len(GRADINGLIST))
         # TODO : FinelScore[i] include all final scores in one list
         # print("Finel SCORE", FinelScore[0], "%")
 
