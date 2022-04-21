@@ -47,6 +47,7 @@ class LoginForm(forms.ModelForm):
         fields = ('username', 'password')
 
 
+
 class UserUpdateForm(forms.ModelForm):
     first_name = forms.CharField()
     last_name = forms.CharField()

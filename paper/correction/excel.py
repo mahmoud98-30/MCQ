@@ -13,8 +13,8 @@ def ExportExcel(GRADINGLIST, FinelScore, CorrectAns, StudentAns, num_of_students
     workbook = xlsxwriter.Workbook(output)
     sheet = workbook.add_worksheet()
 
-    # TotelGRADING = [item for sublist in GRADINGLIST for item in sublist]
-    # print(TotelGRADING)
+    # s = [item for sublist in StudentAns for item in sublist]
+    # print(s)
 
     # data
     print('##################################')
@@ -46,40 +46,49 @@ def ExportExcel(GRADINGLIST, FinelScore, CorrectAns, StudentAns, num_of_students
         que_num.append(num)
 
     TotelGRADING = [item for sublist in GRADINGLIST for item in sublist]
+    # print(TotelGRADING)
     GRADING = []
     for i in TotelGRADING:
         for j in i:
-            if i == 0:
+            if j == 0:
                 GRADING.append(wrong)
             else:
                 GRADING.append(correct)
+    AllCorrection = []
+    for i in range(100, 301, 100):
+        AllCorrection.append(GRADING[:i])
+    print("AllCorrection",AllCorrection,len(AllCorrection))
+    print("GRADING", GRADING, len(GRADING))
 
-    # print("GRADING",GRADING,len(GRADING))
+    Correct = []
+    for cor in CorrectAns:
+        if cor == 0:
+            Correct.append("A")
+        elif cor == 1:
+            Correct.append("B")
+        elif cor == 2:
+            Correct.append("C")
+        else:
+            Correct.append("D")
+    # print("CorrectAns", Correct)
 
-    # Correct = []
-    # for cor in CorrectAns:
-    #     if cor == 0:
-    #         Correct.append("A")
-    #     elif cor == 1:
-    #         Correct.append("B")
-    #     elif cor == 2:
-    #         Correct.append("C")
-    #     else:
-    #         Correct.append("D")
-    # # print(Correct)
-    #
-    # Student = []
-    # for stu in StudentAns:
-    #     if stu == 0:
-    #         Student.append("A")
-    #     elif stu == 1:
-    #         Student.append("B")
-    #     elif stu == 2:
-    #         Student.append("C")
-    #     else:
-    #         Student.append("D")
-    # # print(Student)
-    #
+
+    for stu in StudentAns:
+        # print("-------------"*100)
+        StudentAnsArr = [item for sublist in stu for item in sublist]
+        # print(StudentAnsArr, len(StudentAnsArr))
+        Student = []
+        for score_unm in StudentAnsArr:
+            if score_unm == 0:
+                Student.append("A")
+            elif score_unm == 1:
+                Student.append("B")
+            elif score_unm == 2:
+                Student.append("C")
+            else:
+                Student.append("D")
+        # print("StudentAns", Student, len(Student))
+
     # # write data in file
     # for item in range(len(que_num)):
     #     sheet.write(1, item + 1, que_num[item])
@@ -103,4 +112,4 @@ def ExportExcel(GRADINGLIST, FinelScore, CorrectAns, StudentAns, num_of_students
     )
     response['Content-Disposition'] = 'attachment; filename=%s' % filename
 
-    # return response
+    return response
