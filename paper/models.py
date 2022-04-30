@@ -105,7 +105,7 @@ class Teacher(models.Model):
         verbose_name_plural = _('Teacher')
 
     def __str__(self):
-        return self.name
+        return self.name + '(' + self.subject + ')'
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
@@ -114,8 +114,8 @@ class Teacher(models.Model):
 class Student(models.Model):
     name = models.CharField(max_length=225)
     code = models.CharField(max_length=225)
-    class_room = models.ForeignKey(Class, on_delete=models.CASCADE, blank=True, null=True, )
-    teacher_name = models.ForeignKey(Teacher, on_delete=models.CASCADE, blank=True, null=True, )
+    class_room = models.ForeignKey(Class, on_delete=models.CASCADE, blank=True, null=True)
+    teacher_name = models.ForeignKey(Teacher, on_delete=models.CASCADE, blank=True, null=True)
     qr_code = models.ImageField(blank=True, upload_to='QR/', default='qrcode.png')
 
     class Meta:

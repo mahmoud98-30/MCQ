@@ -7,15 +7,7 @@
      <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">{% trans "Correct Answer" %}</h1>
-                        <a href="{% static 'paper/img/form.pdf' %}" download="{% trans "Download the question form" %}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-                                class="fas fa-download fa-sm text-white-50"></i>{% trans "Download the question form" %}</a>
-                        <a href="{% static 'paper/img/C.jpg' %}" download="{% trans "Download the correct answer sheet demo" %}" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm"><i
-                                class="fas fa-download fa-sm text-white-50"></i>{% trans "Download the correct answer sheet demo" %}</a>
-                        <a href="{% static 'paper/img/S.jpg' %}" download="{% trans "Download Student's Answer Sheet Demo" %}" class="d-none d-sm-inline-block btn btn-sm btn-danger shadow-sm"><i
-                                class="fas fa-download fa-sm text-white-50"></i>{% trans "Download Student's Answer Sheet Demo" %}</a>
-                    </div>
+                    {% include "paper/demo.html" %}
 
                      {% if messages %}
                      {% for message in messages %}
@@ -35,7 +27,7 @@
                               <div class="form-group">
                                   <div class="mb-3">
 {#                                        <label class="requiredField d-flex" for="id_title">{% trans "upload" %}</label>#}
-                                        <input type="file"data-form-type="title" id="id_uploadfile" name="uploadfile" class="form-control d-flex" placeholder="{% trans "upload" %}">
+                                        <input type="file"data-form-type="title" id="id_uploadfile" name="student" class="form-control d-flex" placeholder="{% trans "upload" %}" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
 
                                   </div>
 

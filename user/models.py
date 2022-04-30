@@ -6,7 +6,7 @@ from django.utils.translation import gettext_lazy as _
 
 
 class Profile(models.Model):
-    image = models.ImageField(default='paper/img/logo.png', upload_to='profile_pics')
+    image = models.ImageField(default='profile_pics/school_logo.png', upload_to='profile_pics')
     school_name = models.CharField(max_length=225)
     school_address = models.CharField(max_length=225)
     user = models.OneToOneField(User, on_delete=models.CASCADE)

@@ -48,6 +48,7 @@
         min-height: 100%;
         }
 
+
     </style>
 
 </head>
@@ -57,103 +58,7 @@
     <!-- Page Wrapper -->
     <div id="wrapper" >
 
-        <!-- Sidebar -->
-        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar" >
-
-            <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ home }}/">
-                <div class="sidebar-brand-icon rotate-n-15">
-                    <img style="height: 56px;width: auto;" src="{% static 'paper/img/logo.png' %}">
-                </div>
-                <div class="sidebar-brand-text mx-3">{% trans "correction" %}</div>
-            </a>
-
-            <!-- Divider -->
-            <hr class="sidebar-divider my-0">
-
-            <!-- Nav Item - Dashboard -->
-            <li class="nav-item active">
-                <a class="nav-link d-flex" href="{{ home }}/">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>{% trans "correction" %}</span></a>
-            </li>
-
-            <!-- Divider -->
-            <hr class="sidebar-divider">
-
-            <!-- Heading -->
-            <div class="sidebar-heading d-flex">
-                {% trans "Papers and settings" %}
-            </div>
-
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
-                    aria-expanded="true" aria-controls="collapsePages">
-                    <i class="fas fa-fw fa-folder"></i>
-                    <span>{% trans "settings" %}</span>
-                </a>
-                <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">{% trans "student" %}</h6>
-                        <a class="collapse-item" href="{% url 'paper:new-student' %}">{% trans "new student" %}</a>
-                        <a class="collapse-item" href="{% url 'paper:generate-pdf' %}">{% trans "generate pdf" %}</a>
-                        <a class="collapse-item" href="#">{% trans "delete students" %}</a>
-                        <div class="collapse-divider"></div>
-                        <h6 class="collapse-header">{% trans "teacher" %}</h6>
-                        <a class="collapse-item" href="{% url 'paper:new-teacher' %}">{% trans "new teacher" %}</a>
-                        <a class="collapse-item" href="#">{% trans "delete teachers" %}</a>
-                        <div class="collapse-divider"></div>
-                        <h6 class="collapse-header">{% trans "class" %}</h6>
-                        <a class="collapse-item" href="{% url 'paper:new-class' %}">{% trans "new class" %}</a>
-                        <a class="collapse-item" href="#">{% trans "delete class" %}</a>
-                    </div>
-                </div>
-            </li>
-
-            <!-- Nav Item - Dashboard -->
-            <li class="nav-item active">
-                <a class="nav-link d-flex" href="{% url "paper:paper-list" %}">
-                    <i class="fas fa-fw far fa-copy"></i>
-                    <span>{% trans "Question and answer sheets" %}</span></a>
-            </li>
-            <li class="nav-item active">
-                <a class="nav-link d-flex" href="{% url "paper:import-student-data" %}">
-                    <i class="fas fa-fw far fa-copy"></i>
-                    <span>{% trans "upload and generate" %}</span></a>
-            </li>
-
-             <!-- Nav Item - Dashboard -->
-            <li class="nav-item active">
-                <a class="nav-link d-flex" data-toggle="modal" data-target="#DeleteAllModal">
-                    <i class="fas fa-fw far fa-cog"></i>
-                    <span>{% trans "Delete all data" %} </span></a>
-            </li>
-
-            <!-- Divider -->
-            <hr class="sidebar-divider">
-
-            <!-- Heading -->
-            <div class="sidebar-heading d-flex">
-                {% trans "Exit" %}
-            </div>
-
-                <!-- Nav Item - Dashboard -->
-            <li class="nav-item active ">
-                <a class="nav-link d-flex" data-toggle="modal" data-target="#logoutModal">
-                    <i class="fas fa-fw far fa-sign-out-alt"></i>
-                    <span>{% trans "logout" %}</span></a>
-            </li>
-
-            <!-- Divider -->
-            <hr class="sidebar-divider d-none d-md-block">
-
-            <!-- Sidebar Toggler (Sidebar) -->
-            <div class="text-center d-none d-md-inline">
-                <button class="rounded-circle border-0" id="sidebarToggle"></button>
-            </div>
-
-        </ul>
-        <!-- End of Sidebar -->
+    {% include "paper/sidebar.html" %}
 
         <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
@@ -295,6 +200,64 @@
             </div>
         </div>
     </div>
+
+    <div class="modal fade" id="DeleteAllStudents" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">{% trans "Do you really want to clear all the question papers?" %}</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close" style="display: contents;">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">{% trans "If you really want to erase the papers, click on Clear" %}</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">{% trans "Cancel" %}</button>
+                    <a class="btn btn-primary" href="{% url "paper:delete-all-students" %}">{% trans "Delete" %}</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="DeleteAllTeachers" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">{% trans "Do you really want to clear all the question papers?" %}</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close" style="display: contents;">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">{% trans "If you really want to erase the papers, click on Clear" %}</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">{% trans "Cancel" %}</button>
+                    <a class="btn btn-primary" href="{% url "paper:delete-all-teachers" %}">{% trans "Delete" %}</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="DeleteAllClass" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">{% trans "Do you really want to clear all the question papers?" %}</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close" style="display: contents;">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">{% trans "If you really want to erase the papers, click on Clear" %}</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">{% trans "Cancel" %}</button>
+                    <a class="btn btn-primary" href="{% url "paper:delete-all-class" %}">{% trans "Delete" %}</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
     <!-- Bootstrap core JavaScript-->
     <script src="{% static 'paper/vendor/jquery/jquery.min.js' %}"></script>

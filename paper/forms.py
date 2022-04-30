@@ -24,6 +24,8 @@ class CorrectionForm(forms.ModelForm):
 
 
 class StudentForm(forms.ModelForm):
+    class_room = forms.ModelChoiceField(queryset=Class.objects.all())
+    teacher_name = forms.ModelChoiceField(queryset=Teacher.objects.all())
     class Meta:
         labels = {'name': _('name'), 'code': _('code'),
                   'class_room': _('class_room'), 'teacher_name': _('teacher_name'), }
@@ -38,6 +40,9 @@ class StudentForm(forms.ModelForm):
         if Student.objects.filter(code=cd['code']).exists():
             raise forms.ValidationError(_("The code is already "))
         return cd['code']
+
+
+
 
 
 class UpdateStudentForm(forms.ModelForm):

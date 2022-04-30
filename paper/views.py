@@ -1,3 +1,4 @@
+import pandas as pd
 from django.http import HttpResponseRedirect, HttpResponse, HttpResponseBadRequest
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
@@ -5,6 +6,8 @@ from django.contrib import messages
 from tablib import Dataset
 from django.utils.translation import gettext_lazy as _
 from django.views.generic.edit import FormView
+from django.core.files.storage import FileSystemStorage
+import datetime as dt
 
 from paper.forms import CorrectForm, CorrectionForm, StudentForm, TeacherForm, ClassForm, UpdateStudentForm, UpdateTeacherForm, \
     UpdateClassForm
@@ -111,19 +114,37 @@ def delete_all_papers(request):
 
 @login_required(login_url='/login/')
 def new_student(request):
-    form = StudentForm(request.POST or None)
+    student_form = StudentForm(request.POST)
+    teacher_form = TeacherForm(request.POST or None)
+    class_form = ClassForm(request.POST or None)
     student = Student.objects.all()
-    if request.method == 'POST':
-        if form.is_valid():
-            form = form.save(commit=False)
+    if request.method == 'POST' and "NewStudent" in request.POST:
+        if student_form.is_valid():
+            form = student_form.save(commit=False)
             form.save()
             msg = _('done ')
             messages.add_message(request, messages.SUCCESS, msg)
-        form = StudentForm()
+        student_form = StudentForm()
+    elif request.method == 'POST' and "NewTeacher" in request.POST:
+        if teacher_form.is_valid():
+            form = teacher_form.save(commit=False)
+            form.save()
+            msg = _('done ')
+            messages.add_message(request, messages.SUCCESS, msg)
+        teacher_form = TeacherForm()
+    else:
+        if class_form.is_valid():
+            form = class_form.save(commit=False)
+            form.save()
+            msg = _('done ')
+            messages.add_message(request, messages.SUCCESS, msg)
+        class_form = ClassForm()
 
     return render(request, 'paper/student/new_student.html', {
         'title': _('new student'),
-        'form': form,
+        'student_form': student_form,
+        'teacher_form': teacher_form,
+        'class_form': class_form,
         'student': student,
     })
 
@@ -237,7 +258,7 @@ def new_teacher(request):
 
 @login_required(login_url='/login/')
 def update_teacher(request, fk):
-    obj = get_object_or_404(Student, id=fk)
+    obj = get_object_or_404(Teacher, id=fk)
     form = UpdateTeacherForm(request.POST or None, instance=obj)
 
     if form.is_valid():
@@ -282,7 +303,7 @@ def new_class(request):
 
 @login_required(login_url='/login/')
 def update_class(request, fk):
-    obj = get_object_or_404(Student, id=fk)
+    obj = get_object_or_404(Class, id=fk)
     form = UpdateClassForm(request.POST or None, instance=obj)
 
     if form.is_valid():
@@ -305,3 +326,34 @@ def delete_class(request, fk):
 def delete_all_class(request):
     Class.objects.all()
     return HttpResponseRedirect("/")
+
+
+def Import_csv(request):
+    print('s')
+    try:
+        if request.method == 'POST' and request.FILES['student']:
+
+            myfile = request.FILES['student']
+            fs = FileSystemStorage()
+            filename = fs.save(myfile.name, myfile)
+            uploaded_file_url = fs.url(filename)
+            excel_file = uploaded_file_url
+            print(excel_file)
+            empexceldata = pd.read_csv("." + excel_file, encoding='utf-8')
+            print(type(empexceldata))
+            dbframe = empexceldata
+            for dbframe in dbframe.itertuples():
+                fromdate_time_obj = dt.datetime.strptime(dbframe.DOB, '%d-%m-%Y')
+                obj = Student.objects.create(name=dbframe.name, code=dbframe.code,
+                                                  class_room=dbframe.class_room,
+                                                  teacher_name=dbframe.teacher_name,)
+                print(type(obj))
+                obj.save()
+
+            return render(request, 'importexcel.html', {
+                'uploaded_file_url': uploaded_file_url
+            })
+    except Exception as identifier:
+        print(identifier,'wrong')
+
+    return render(request, 'paper/import_student.html', {})
