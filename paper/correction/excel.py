@@ -17,12 +17,16 @@ def ExportExcel(GRADINGLIST, FinelScore, CorrectAns, StudentAns, num_of_students
     # print(s)
 
     # # data
-    # print('##################################')
-    # print("TOTEL CORRECTION", GRADINGLIST)
-    # print("Finel Score", FinelScore)
-    # print("Correct Answer", CorrectAns)
-    # print("Student Answer", StudentAns)
-    # print('##################################')
+    print('##################################')
+    print("TOTEL CORRECTION", GRADINGLIST)
+    print("TOTEL CORRECTION", len(GRADINGLIST))
+    print("Finel Score", FinelScore)
+    print("Finel Score", len(FinelScore))
+    print("Correct Answer", CorrectAns)
+    print("Correct Answer", len(CorrectAns))
+    print("Student Answer", StudentAns)
+    print("Student Answer", len(StudentAns))
+    print('##################################')
 
     # Header
     student_name = "Student Name"
@@ -47,6 +51,7 @@ def ExportExcel(GRADINGLIST, FinelScore, CorrectAns, StudentAns, num_of_students
         else:
             Correct.append("D")
     # print("CorrectAns", Correct)
+    # print("CorrectAns", len(Correct))
 
 
     for j in range(1, 7 * num_of_students_paper, 7):
@@ -62,12 +67,12 @@ def ExportExcel(GRADINGLIST, FinelScore, CorrectAns, StudentAns, num_of_students
             sheet.write(j + 1, item + 1, str(que_num[item]))
             sheet.write(j + 2, item + 1, Correct[item])
 
-        for stu in StudentAns:
-            # print("-------------"*100)
-            StudentAnsArr = [item for sublist in stu for item in sublist]
-            # print(StudentAnsArr, len(StudentAnsArr))
-            Student = []
-            for score_unm in StudentAnsArr:
+    for stu in StudentAns:
+        # print("-------------"*100)
+        StudentAnsArr = [item for sublist in stu for item in sublist]
+        # print(StudentAnsArr, len(StudentAnsArr))
+        Student = []
+        for score_unm in StudentAnsArr:
                 if score_unm == 0:
                     Student.append("A")
                 elif score_unm == 1:
@@ -76,72 +81,74 @@ def ExportExcel(GRADINGLIST, FinelScore, CorrectAns, StudentAns, num_of_students
                     Student.append("C")
                 else:
                     Student.append("D")
-            # print("StudentAns", Student, len(Student))
-            for item in range(len(que_num)):
-                sheet.write(j + 3, item + 1, Student[item])
+        print("StudentAns", Student, len(Student))
+#       TODO: add counter here
+        for item in range(len(que_num)):
+            sheet.write(j + 3, item + 1, Student[item])
 
-        TotelGRADING = [item for sublist in GRADINGLIST for item in sublist]
-        # print(TotelGRADING)
-        GRADING = []
-        for i in TotelGRADING:
-            for f in i:
-                if f == 0:
-                    GRADING.append(wrong)
-                else:
-                    GRADING.append(correct)
-        AllCorrection = []
-        for i in range(100, 301, 100):
-            AllCorrection.append(GRADING[:i])
-        # print("AllCorrection", AllCorrection, len(AllCorrection))
-        # print("AllCorrection", AllCorrection[1], len(AllCorrection))
-        # print("GRADING", GRADING, len(GRADING))
-        for i in range(0, 3):
-            print(i)
-            print(AllCorrection[i])
-        break
-            # for itme in range(0, 100):
-            #     sheet.write(j + 4, itme + 1, corr[itme])
-
-
-
+    #     TotelGRADING = [item for sublist in GRADINGLIST for item in sublist]
+    #     # print(TotelGRADING)
+    #     GRADING = []
+    #     for i in TotelGRADING:
+    #         for f in i:
+    #             if f == 0:
+    #                 GRADING.append(wrong)
+    #             else:
+    #                 GRADING.append(correct)
+    #     AllCorrection = []
+    #     for i in range(100, 301, 100):
+    #         AllCorrection.append(GRADING[:i])
     #
-    # TotelGRADING = [item for sublist in GRADINGLIST for item in sublist]
-    # # print(TotelGRADING)
-    # GRADING = []
-    # for i in TotelGRADING:
-    #     for j in i:
-    #         if j == 0:
-    #             GRADING.append(wrong)
-    #         else:
-    #             GRADING.append(correct)
-    # AllCorrection = []
-    # for i in range(100, 301, 100):
-    #     AllCorrection.append(GRADING[:i])
-    # print("AllCorrection", AllCorrection, len(AllCorrection))
-    # print("GRADING", GRADING, len(GRADING))
-    # for f in range(1, 7 * num_of_students_paper, 7):
-    #     for item in range(0, len(GRADING)):
-    #         sheet.write(f + 4, item + 1, GRADING[item])
-
-    Correction = []
-    # for itemc in AllCorrection:
-    #     print("itemc", itemc, len(itemc))
-    # print("Correction", Correction, len(Correction))
-    # for f in range(1, 7 * num_of_students_paper, 7):
-    #     for item in range(len(que_num)):
-    #         sheet.write(f + 4, item + 1, Correction[item])
-
-
-
-    # write data in file
+    #     # print("AllCorrection", AllCorrection, len(AllCorrection))
+    #     # print("AllCorrection", AllCorrection[1], len(AllCorrection))
+    #     # print("GRADING", GRADING, len(GRADING))
+    #     for i in range(0, 3):
+    #         print(i)
+    #         print(AllCorrection[i])
+    #
+    #         # for itme in range(0, 100):
+    #         #     sheet.write(j + 4, itme + 1, corr[itme])
+    #
+    #
+    #
+    # #
+    # # TotelGRADING = [item for sublist in GRADINGLIST for item in sublist]
+    # # # print(TotelGRADING)
+    # # GRADING = []
+    # # for i in TotelGRADING:
+    # #     for j in i:
+    # #         if j == 0:
+    # #             GRADING.append(wrong)
+    # #         else:
+    # #             GRADING.append(correct)
+    # # AllCorrection = []
+    # # for i in range(100, 301, 100):
+    # #     AllCorrection.append(GRADING[:i])
+    # # print("AllCorrection", AllCorrection, len(AllCorrection))
+    # # print("GRADING", GRADING, len(GRADING))
+    # # for f in range(1, 7 * num_of_students_paper, 7):
+    # #     for item in range(0, len(GRADING)):
+    # #         sheet.write(f + 4, item + 1, GRADING[item])
+    #
+    # Correction = []
+    # # for itemc in AllCorrection:
+    # #     print("itemc", itemc, len(itemc))
+    # # print("Correction", Correction, len(Correction))
+    # # for f in range(1, 7 * num_of_students_paper, 7):
+    # #     for item in range(len(que_num)):
+    # #         sheet.write(f + 4, item + 1, Correction[item])
+    #
+    #
+    #
+    # # write data in file
     # for item in range(len(que_num)):
-    #     sheet.write(4, item + 1, Correct[item])
-        # sheet.write(2, item + 1, GRADING[item])
-        # sheet.write(3, item + 1, Student[item])
-        # sheet.write(4, item + 1, Correct[item])
-
-    # sheet.write("A8", PercentScore)
-
+    #     sheet.write(3, item + 1, Correct[item])
+    #     sheet.write(5, item + 1, GRADING[item])
+    #
+    #     # sheet.write(3, item + 1, Student[item])
+    #
+    # # sheet.write("A8", PercentScore)
+    #
     # Close the workbook before sending the data.
     workbook.close()
 
