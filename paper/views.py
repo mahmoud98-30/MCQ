@@ -15,7 +15,7 @@ from paper.models import Correct, Student, Teacher, Class, Correction
 from user.models import Profile
 from .correction.answer_paper import answer_paper
 from .correction.correct_paper import correct_paper
-from .correction.finel_score import finel_correction
+from .correction.finel_score import finel_correction, single_finel_correction
 from .correction1 import chack_answer
 from .filters import StudentFilter
 from .generate_pdf import generate
@@ -53,7 +53,9 @@ def home(request):
             # print('CorrectAnslist', CorrectAnslist)
             # print('StudentAnslist', StudentAnslist)
 
-            correction = finel_correction(CorrectAnslist, StudentAnslist, SimgWarpColored, Simg, pts1, pts2)
+            # correction = finel_correction(CorrectAnslist, StudentAnslist, SimgWarpColored, Simg, pts1, pts2)
+
+            correction = single_finel_correction(CorrectAnslist, StudentAnslist, SimgWarpColored, Simg, pts1, pts2)
 
             msg = _(
                 'Congratulations, your correction has been successful.')
