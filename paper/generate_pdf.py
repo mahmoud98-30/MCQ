@@ -1,4 +1,5 @@
 from datetime import datetime
+from django.shortcuts import render, redirect, get_object_or_404
 
 from fpdf import FPDF
 import io
@@ -462,3 +463,9 @@ def generate(student_data, school):
     return FileResponse(open(filename, 'rb'), as_attachment=True, content_type='application/pdf')
 
 
+def gen(request):
+
+    return render(request, 'paper/student/update_student.html', {
+        'title': _('update student'),
+
+    })

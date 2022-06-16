@@ -70,6 +70,7 @@ def y_contour(contours):
 
 def rectContour(contours):
     rectCon = []
+    qr = []
     max_area = 0
     for i in contours:
         area = cv2.contourArea(i)

@@ -18,7 +18,7 @@ from .correction.correct_paper import correct_paper
 from .correction.finel_score import finel_correction, single_finel_correction
 from .correction1 import chack_answer
 from .filters import StudentFilter
-from .generate_pdf import generate
+from .generate_pdf import generate, gen
 from .resources import StudentResource
 
 
@@ -193,7 +193,8 @@ def generate_pdf(request):
         else:
             student_filter = Student.objects.filter(class_room__name=class_t, teacher_name__subject=subject_t)
             # print(student_filter)
-            generate_paper = generate(student_filter, school_profil,)
+            # generate_paper = generate(student_filter, school_profil,)
+            generate_paper = gen(student_filter, school_profil,)
 
             # for student_data in student_filter:
             #
